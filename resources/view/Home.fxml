@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" />
+<BorderPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="application.controller.CreateAccountController"
+            prefWidth="500" prefHeight="500">
+    <top>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" prefWidth="171.0" text="Homepage">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" spacing = "30.0">
+            <children>
+                <Button mnemonicParsing="false" text="Create New Account" />
+                <Button mnemonicParsing="false" text="Define New Transaction Type" />
+                <Button mnemonicParsing="false" text="Enter Transaction/Expense" />
+                <Button mnemonicParsing="false" text="Schedule a Transaction" />
+                <Button mnemonicParsing="false" text="Search For Transaction" />
+                <Button mnemonicParsing="false" text="View Reports" />
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
