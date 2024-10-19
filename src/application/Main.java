@@ -12,9 +12,12 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-			Scene scene = new Scene(root,450,400);
+
+			Scene scene = new Scene(root);
+
 			scene.getStylesheets().add(getClass().getClassLoader().getResource("css/application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Home"); // Set the window title
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
