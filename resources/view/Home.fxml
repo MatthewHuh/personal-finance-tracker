@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="application.controller.CreateAccountController"
+            fx:controller="application.controller.HomeController"
             prefWidth="500" prefHeight="500">
     <top>
         <HBox alignment="CENTER" BorderPane.alignment="CENTER">
@@ -21,12 +21,12 @@
     <center>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" spacing = "30.0">
             <children>
-                <Button mnemonicParsing="false" text="Create New Account" />
-                <Button mnemonicParsing="false" text="Define New Transaction Type" />
-                <Button mnemonicParsing="false" text="Enter Transaction/Expense" />
-                <Button mnemonicParsing="false" text="Schedule a Transaction" />
-                <Button mnemonicParsing="false" text="Search For Transaction" />
-                <Button mnemonicParsing="false" text="View Reports" />
+                <Button fx:id="createNewAccountButton" onAction="#onCreateNewAccount" mnemonicParsing="false" text="Create New Account" />
+                <Button fx:id="defineNewTransactionButton" onAction="#onDefineNewTransaction" mnemonicParsing="false" text="Define New Transaction Type" />
+                <Button fx:id="enterTransactionButton" onAction="#onEnterTransaction" mnemonicParsing="false" text="Enter Transaction/Expense" />
+                <Button fx:id="scheduleTransactionButton" onAction="#onScheduleTransaction" mnemonicParsing="false" text="Schedule a Transaction" />
+                <Button fx:id="searchTransactionButton" onAction="#onSearchTransaction" mnemonicParsing="false" text="Search For Transaction" />
+                <Button fx:id="viewReportsButton" onAction="#onViewReports" mnemonicParsing="false" text="View Reports" />
             </children>
         </VBox>
     </center>
