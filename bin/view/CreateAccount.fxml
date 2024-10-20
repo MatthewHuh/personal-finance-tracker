@@ -39,9 +39,9 @@
                         <TextField fx:id="accountNameText" maxWidth="200.0" promptText="Enter account name" GridPane.columnIndex="1" />
                         <TextField fx:id="openingBalanceText" maxWidth="175.0" promptText="Enter opening balance" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <DatePicker fx:id="openingDatePicker" onAction="#onDateAction" prefHeight="26.0" prefWidth="110.0" promptText="Select a date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="accountNameErrorMsg" prefHeight="18.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="openingDateErrorMsg" prefHeight="18.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="openingBalanceErrorMsg" prefHeight="18.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="accountNameErrorMsg" prefHeight="18.0" prefWidth="200.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="openingDateErrorMsg" prefHeight="18.0" prefWidth="203.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="openingBalanceErrorMsg" prefHeight="18.0" prefWidth="261.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                </children>
