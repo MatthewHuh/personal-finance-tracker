@@ -1,6 +1,8 @@
 package application.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +37,12 @@ public class CreateAccountController {
     @FXML
     private DatePicker openingDatePicker;
 
+    // set default value in date picker to current date
+    @FXML
+    public void initialize() {
+    	openingDatePicker.setValue(LocalDate.now());
+    }   
+    
     @FXML
     void onCancelAction(ActionEvent event) {
     	try {
