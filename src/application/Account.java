@@ -1,25 +1,41 @@
 package application;
 
+import java.time.LocalDate;
+
 public class Account {
 	private String name;
-	private String openingDate;
+	private LocalDate openingDate;
 	private double balance;
 	
-	public Account(String name, String openingDate, double balance) {
+	public Account(String name, LocalDate openingDate, double balance) {
 		this.name = name;
 		this.openingDate = openingDate;
 		this.balance = balance;
 	}
 	
+	// getter methods
 	public String getName() {
 		return name;
 	}
 	
-	public String openingDate() {
+	public LocalDate getOpeningDate() {
 		return openingDate;
 	}
 	
-	public double balance() {
+	public double getBalance() {
 		return balance;
+	}
+	
+	// setter methods
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setOpeningDate(LocalDate openingDate) {
+		this.openingDate = openingDate;
+	}
+	
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 }

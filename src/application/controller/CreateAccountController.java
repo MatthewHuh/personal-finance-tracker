@@ -109,6 +109,8 @@ public class CreateAccountController {
     	if(inputValidate) {
     		// return to home page
 	    	try {
+	    		
+	    		
 	    		// Load the Home.fxml file
 	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
 	    		
