@@ -3,6 +3,8 @@ package application.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import application.Account;
+import application.AccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -109,7 +111,9 @@ public class CreateAccountController {
     	if(inputValidate) {
     		// return to home page
 	    	try {
-	    		
+	    		AccountDAO dao = new AccountDAO();
+	    		Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
+	    		dao.createAccount(acc);
 	    		
 	    		// Load the Home.fxml file
 	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
