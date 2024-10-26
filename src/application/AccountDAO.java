@@ -1,50 +1,36 @@
 package application;
 
-import java.io.FileReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
+import com.opencsv.CSVWriter;
 
 public class AccountDAO {
 
-	@SuppressWarnings("unchecked")
 	public void createAccount(Account acc) {
-		// Load existing accounts data from the file
-		JSONArray accountsArray = loadExistingAccounts();
-
-		// Create a new JSON object for the account and add it to the array
-		JSONObject accountObject = new JSONObject();
-		accountObject.put("name", acc.getName());
-		accountObject.put("date", acc.getOpeningDate().toString());
-		accountObject.put("balance", acc.getBalance());
-
-		// Add the new account to the existing array
-		accountsArray.add(accountObject);
-
-		// Write the updated array back to the file
-		try (FileWriter file = new FileWriter("DB/accounts.json")) {
-			file.write(accountsArray.toJSONString());
-			file.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// specify path of the csv file
+	    File file = new File("db/accounts.csv");
+	    try { 
+	        // create FileWriter object with file as parameter 
+	        FileWriter outputfile = new FileWriter(file, true); 
+	  
+	        // create CSVWriter object filewriter object as parameter 
+	        CSVWriter writer = new CSVWriter(outputfile, ',' , 
+	        		CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END); 
+	  
+	        // add data to csv 
+	        String[] data = { acc.getName(), acc.getOpeningDate().toString(), String.valueOf(acc.getBalance()) }; 
+	        writer.writeNext(data); 
+	  
+	        // closing writer connection 
+	        writer.close(); 
+	    } 
+	    catch (IOException e) { 
+	        // TODO Auto-generated catch block 
+	        e.printStackTrace(); 
+	    }
 	}
-
-	private JSONArray loadExistingAccounts() {
-		JSONParser jsonParser = new JSONParser();
-		JSONArray accountsArray;
-
-		try (FileReader reader = new FileReader("DB/accounts.json")) {
-			Object obj = jsonParser.parse(reader);
-			accountsArray = (JSONArray) obj;
-		} catch (IOException | ParseException e) {
-			// If the file does not exist or cannot be parsed, return a new empty array
-			accountsArray = new JSONArray();
-		}
-
-		return accountsArray;
-	}
+	
+	
 }

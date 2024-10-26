@@ -1,9 +1,8 @@
 package application;
 
-import application.Account;
 import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +16,22 @@ public class DataAccessLayer {
 		accDAO = new AccountDAO();
 	}
 	
-	public void createAccount(Account acc) {
-		
+	public boolean createAccount(Account acc) {
+		return true;
 	}
 	
 	public void updateAccount(Account acc) {
 		
 	}
 	
-	private static final String ACCOUNTS_FILE = "accounts.csv"; // path to accounts.csv
+	private static final String ACCOUNTS_FILE = "db/accounts.csv"; // path to accounts.csv
 	
 	//parses data from accounts.csv into an array of accounts
 	public static List<Account> loadAccounts() {
         List<Account> accounts = new ArrayList<>();
+        File file = new File(ACCOUNTS_FILE);
 
-        try (InputStream is = DataAccessLayer.class.getResourceAsStream(ACCOUNTS_FILE);
-             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
             String line;
             boolean isFirstLine = true;

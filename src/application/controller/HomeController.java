@@ -51,6 +51,23 @@ public class HomeController {
     private Button viewReportsButton;
 
     @FXML
+    public void initialize() {
+        // Set up the columns to match Account class properties
+        accountNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        accountDateCol.setCellValueFactory(new PropertyValueFactory<>("openingDate"));
+        accountBalanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
+
+        // Load accounts from the CSV file
+        List<Account> accounts = DataAccessLayer.loadAccounts();
+        if (accounts != null) {
+            ObservableList<Account> accountList = FXCollections.observableArrayList(accounts);
+            accountTable.setItems(accountList);
+        }
+        // sort by opening date descending
+        accountTable.getSortOrder().add(accountDateCol);
+    }
+    
+    @FXML
     void onCreateNewAccount(ActionEvent event) {
         try {
             // Load the CreateAccount.fxml file
@@ -91,21 +108,6 @@ public class HomeController {
     @FXML
     void onViewReports(ActionEvent event) {
 
-    }
-    
-    @FXML
-    public void initialize() {
-        // Set up the columns to match Account class properties
-        accountNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        accountDateCol.setCellValueFactory(new PropertyValueFactory<>("openingDate"));
-        accountBalanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
-
-        // Load accounts from the CSV file
-        List<Account> accounts = DataAccessLayer.loadAccounts();
-        if (accounts != null) {
-            ObservableList<Account> accountList = FXCollections.observableArrayList(accounts);
-            accountTable.setItems(accountList);
-        }
     }
 
 }

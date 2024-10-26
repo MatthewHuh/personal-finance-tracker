@@ -39,9 +39,9 @@
             <Label contentDisplay="CENTER" text="Accounts" textAlignment="CENTER" />
             <TableView fx:id="accountTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="accountNameCol" prefWidth="75.0" text="Name" />
-                <TableColumn fx:id="accountDateCol" prefWidth="83.20001220703125" text="Opening Date" />
-                  <TableColumn fx:id="accountBalanceCol" prefWidth="75.0" text="Balance" />
+                <TableColumn fx:id="accountNameCol" prefWidth="180.79999083280563" text="Name" />
+                <TableColumn fx:id="accountDateCol" prefWidth="111.19999694824219" sortType="DESCENDING" text="Opening Date" />
+                  <TableColumn fx:id="accountBalanceCol" prefWidth="188.800048828125" text="Balance" />
               </columns>
             </TableView>
          </children>
