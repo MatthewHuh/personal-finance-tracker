@@ -1,1 +1,38 @@
-/bin/
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.classpath
+.project
+.settings/
+target/
+bin/
+*.iml
+out/
+
+# Maven artifacts
+.repository/
+
+# Gradle artifacts
+.gradle/
+build/
+
+# Other
+hs_err_pid*

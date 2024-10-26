@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import application.Account;
 import application.AccountDAO;
+import application.DataAccessLayer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,13 +40,13 @@ public class CreateAccountController {
     @FXML
     private DatePicker openingDatePicker;
 
-	private AccountDAO accountDAO;
+	private DataAccessLayer dal;
 
     // set default value in date picker to current date
     @FXML
     public void initialize() {
     	openingDatePicker.setValue(LocalDate.now());
-		accountDAO = new AccountDAO(); // initialize accountDAO so that the same one is used
+		dal = new DataAccessLayer(); // initialize accountDAO so that the same one is used
     }   
     
     @FXML
@@ -86,6 +87,15 @@ public class CreateAccountController {
     		accountNameErrorMsg.setText("");
     	}
     	
+    	//check if account name already exists
+    	if (DataAccessLayer.searchAccount(accountNameText.getText()) != null) {
+    		accountNameErrorMsg.setText("Account name already exists");
+    		inputValidate = false;
+    	}
+    	else {
+    		accountNameErrorMsg.setText("");
+    	}
+    	
     	// check if date selected
     	if(openingDatePicker.getValue() == null) {
     		openingDateErrorMsg.setText("Please select a date");
@@ -110,13 +120,15 @@ public class CreateAccountController {
     		}
     	}
     	
+    	Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
+    	if(!dal.createAccount(acc)) {
+    		accountNameErrorMsg.setText("Account name taken. Please enter a unique name");
+    		inputValidate = false;
+    	}
     	// verify valid inputs
     	if(inputValidate) {
     		// return to home page
 	    	try {
-	    		Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
-	    		accountDAO.createAccount(acc);
-	    		
 	    		// Load the Home.fxml file
 	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
 
