@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import application.Account;
 import application.AccountDAO;
+import application.DataAccessLayer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,6 +81,15 @@ public class CreateAccountController {
     	// check if account name input
     	if(accountNameText.getText().equals("")) {
     		accountNameErrorMsg.setText("Please enter the name");
+    		inputValidate = false;
+    	}
+    	else {
+    		accountNameErrorMsg.setText("");
+    	}
+    	
+    	//check if account name already exists
+    	if (DataAccessLayer.searchAccount(accountNameText.getText()) != null) {
+    		accountNameErrorMsg.setText("Account name already exists");
     		inputValidate = false;
     	}
     	else {

@@ -58,5 +58,27 @@ public class DataAccessLayer {
 
         return accounts;
     }
+	
+	/**
+	 * Searches for an account by name in the list of accounts.
+	 *
+	 * This method loads all accounts and iterates through them to find an
+	 * account that matches the specified name. If a matching account is
+	 * found, it is returned. If no matching account is found, the method
+	 * returns null.
+	 *
+	 * @param name the name of the account to search for
+	 * @return the Account object matching the specified name, or null
+	 *         if no account with that name exists
+	 */
+	public static Account searchAccount(String name) {
+		List <Account> accounts = loadAccounts();
+		for (Account acc : accounts) {
+			if (name.equals(acc.getName() ) ) {
+				return acc;
+			}
+		}
+		return null;
+	}
 
 }
