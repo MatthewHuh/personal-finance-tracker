@@ -41,8 +41,11 @@
               <columns>
                 <TableColumn fx:id="accountNameCol" prefWidth="180.79999083280563" text="Name" />
                 <TableColumn fx:id="accountDateCol" prefWidth="111.19999694824219" sortType="DESCENDING" text="Opening Date" />
-                  <TableColumn fx:id="accountBalanceCol" prefWidth="188.800048828125" text="Balance" />
+                  <TableColumn fx:id="accountBalanceCol" prefWidth="328.0000122070312" text="Balance" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </VBox>
