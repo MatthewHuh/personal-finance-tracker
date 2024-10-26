@@ -1,5 +1,8 @@
 package application.controller;
 
+import java.time.LocalDate;
+
+import application.Account;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,9 +10,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 
 public class HomeController {
+
+    @FXML
+    private TableView<Account> accountTable;
+	
+	@FXML
+    private TableColumn<Account, Double> accountBalanceCol;
+
+    @FXML
+    private TableColumn<Account, LocalDate> accountDateCol;
+
+    @FXML
+    private TableColumn<Account, String> accountNameCol;
 
     @FXML
     private Button createNewAccountButton;
