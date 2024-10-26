@@ -1,5 +1,8 @@
 package application.controller;
 
+
+import application.Account;
+import java.time.LocalDate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,9 +10,27 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.cell.PropertyValueFactory;
+import application.DataAccessLayer;
+import java.util.List;
 
 public class HomeController {
+
+    @FXML
+    private TableView<Account> accountTable;
+	
+	@FXML
+    private TableColumn<Account, Double> accountBalanceCol;
+
+    @FXML
+    private TableColumn<Account, LocalDate> accountDateCol;
+
+    @FXML
+    private TableColumn<Account, String> accountNameCol;
 
     @FXML
     private Button createNewAccountButton;
@@ -29,6 +50,23 @@ public class HomeController {
     @FXML
     private Button viewReportsButton;
 
+    @FXML
+    public void initialize() {
+        // Set up the columns to match Account class properties
+        accountNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        accountDateCol.setCellValueFactory(new PropertyValueFactory<>("openingDate"));
+        accountBalanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
+
+        // Load accounts from the CSV file
+        List<Account> accounts = DataAccessLayer.loadAccounts();
+        if (accounts != null) {
+            ObservableList<Account> accountList = FXCollections.observableArrayList(accounts);
+            accountTable.setItems(accountList);
+        }
+        // sort by opening date descending
+        accountTable.getSortOrder().add(accountDateCol);
+    }
+    
     @FXML
     void onCreateNewAccount(ActionEvent event) {
         try {
