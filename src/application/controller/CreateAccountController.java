@@ -39,10 +39,13 @@ public class CreateAccountController {
     @FXML
     private DatePicker openingDatePicker;
 
+	private AccountDAO accountDAO;
+
     // set default value in date picker to current date
     @FXML
     public void initialize() {
     	openingDatePicker.setValue(LocalDate.now());
+		accountDAO = new AccountDAO(); // initialize accountDAO so that the same one is used
     }   
     
     @FXML
@@ -111,13 +114,12 @@ public class CreateAccountController {
     	if(inputValidate) {
     		// return to home page
 	    	try {
-	    		AccountDAO dao = new AccountDAO();
 	    		Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
-	    		dao.createAccount(acc);
+	    		accountDAO.createAccount(acc);
 	    		
 	    		// Load the Home.fxml file
 	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-	    		
+
 	    		// Get the current stage
 				Stage stage = (Stage) createAccountPane.getScene().getWindow();
 				
