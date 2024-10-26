@@ -1,8 +1,8 @@
 package application.controller;
 
-import java.time.LocalDate;
 
 import application.Account;
+import java.time.LocalDate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +12,11 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.cell.PropertyValueFactory;
+import application.DataAccessLayer;
+import java.util.List;
 
 public class HomeController {
 
@@ -87,6 +91,21 @@ public class HomeController {
     @FXML
     void onViewReports(ActionEvent event) {
 
+    }
+    
+    @FXML
+    public void initialize() {
+        // Set up the columns to match Account class properties
+        accountNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        accountDateCol.setCellValueFactory(new PropertyValueFactory<>("openingDate"));
+        accountBalanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
+
+        // Load accounts from the CSV file
+        List<Account> accounts = DataAccessLayer.loadAccounts();
+        if (accounts != null) {
+            ObservableList<Account> accountList = FXCollections.observableArrayList(accounts);
+            accountTable.setItems(accountList);
+        }
     }
 
 }
