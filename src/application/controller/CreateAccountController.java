@@ -83,13 +83,8 @@ public class CreateAccountController {
     		accountNameErrorMsg.setText("Please enter the name");
     		inputValidate = false;
     	}
-    	else {
-    		accountNameErrorMsg.setText("");
-    	}
-    	
-    	//check if account name already exists
-    	if (DataAccessLayer.searchAccount(accountNameText.getText()) != null) {
-    		accountNameErrorMsg.setText("Account name already exists");
+    	else if(DataAccessLayer.searchAccount(accountNameText.getText()) != null) {
+    		accountNameErrorMsg.setText("Account name taken. Please enter a unique name");
     		inputValidate = false;
     	}
     	else {
@@ -120,21 +115,20 @@ public class CreateAccountController {
     		}
     	}
     	
-    	Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
-    	if(!dal.createAccount(acc)) {
-    		accountNameErrorMsg.setText("Account name taken. Please enter a unique name");
-    		inputValidate = false;
-    	}
     	// verify valid inputs
     	if(inputValidate) {
-    		// return to home page
-	    	try {
-	    		// Load the Home.fxml file
-	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-
-	    		// Get the current stage
+    		//create the account object and create account
+    		Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
+    		dal.createAccount(acc);
+    		
+		    try {
+		    	// return to home page
+		    	// Load the Home.fxml file
+		    	Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+	
+		    	// Get the current stage
 				Stage stage = (Stage) createAccountPane.getScene().getWindow();
-				
+					
 				// Set the new scene
 				stage.setScene(new Scene(homeView));
 				stage.setTitle("Home"); // Set the window title

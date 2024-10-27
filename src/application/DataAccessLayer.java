@@ -16,12 +16,8 @@ public class DataAccessLayer {
 		accDAO = new AccountDAO();
 	}
 	
-	public boolean createAccount(Account acc) {
-		if(searchAccount(acc.getName()) != null) {
-			return false;
-		}
+	public void createAccount(Account acc) {
 		accDAO.createAccount(acc);
-		return true;
 	}
 	
 	public void updateAccount(Account acc) {

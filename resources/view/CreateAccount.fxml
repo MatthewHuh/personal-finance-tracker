@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CreateAccountController">
+<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CreateAccountController">
    <center>
       <ScrollPane prefHeight="210.0" prefWidth="416.0">
          <content>
