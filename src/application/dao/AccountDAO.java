@@ -1,10 +1,12 @@
-package application;
+package application.dao;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import com.opencsv.CSVWriter;
+
+import application.Account;
 
 public class AccountDAO {
 

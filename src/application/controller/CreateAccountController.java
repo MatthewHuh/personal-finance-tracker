@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import application.Account;
-import application.AccountDAO;
 import application.DataAccessLayer;
+import application.dao.AccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -82,7 +82,7 @@ public class CreateAccountController {
     	if(accountNameText.getText().equals("")) {
     		accountNameErrorMsg.setText("Please enter the name");
     		inputValidate = false;
-    	}
+    	} // check if name is unique
     	else if(DataAccessLayer.searchAccount(accountNameText.getText()) != null) {
     		accountNameErrorMsg.setText("Account name taken. Please enter a unique name");
     		inputValidate = false;
