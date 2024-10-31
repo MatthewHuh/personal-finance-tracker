@@ -87,12 +87,38 @@ public class HomeController {
 
     @FXML
     void onDefineNewTransaction(ActionEvent event) {
+    	 try {
+             // Load the DefineTransactionType.fxml file
+             Parent defineTransactionTypeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/DefineTransactionType.fxml"));
 
+             // Get the current stage
+             Stage stage = (Stage) defineNewTransactionButton.getScene().getWindow();
+
+             // Set the new scene
+             stage.setScene(new Scene(defineTransactionTypeView));
+             stage.setTitle("Define New Transaction Type"); // Set the window title
+             stage.show();
+         } catch (Exception e) {
+             e.printStackTrace(); // Print stack trace for any errors
+         }
     }
 
     @FXML
     void onEnterTransaction(ActionEvent event) {
+    	try {
+            // Load the CreateTransaction.fxml file
+            Parent createTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/CreateTransaction.fxml"));
 
+            // Get the current stage
+            Stage stage = (Stage) enterTransactionButton.getScene().getWindow();
+
+            // Set the new scene
+            stage.setScene(new Scene(createTransactionView));
+            stage.setTitle("Create New Transaction"); // Set the window title
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace for any errors
+        }
     }
 
     @FXML
