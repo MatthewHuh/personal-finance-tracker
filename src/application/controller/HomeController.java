@@ -15,7 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
-import application.DataAccessLayer;
+import application.dao.AccountDAO;
+
 import java.util.List;
 
 public class HomeController {
@@ -58,7 +59,8 @@ public class HomeController {
         accountBalanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
         // Load accounts from the CSV file
-        List<Account> accounts = DataAccessLayer.loadAccounts();
+        AccountDAO acc = new AccountDAO();
+        List<Account> accounts = acc.load();
         if (accounts != null) {
             ObservableList<Account> accountList = FXCollections.observableArrayList(accounts);
             accountTable.setItems(accountList);
