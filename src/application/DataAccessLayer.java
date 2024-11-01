@@ -12,75 +12,23 @@ import application.dao.AccountDAO;
 public class DataAccessLayer {
 	
 	
-	private AccountDAO accDAO;
+	private static AccountDAO accDAO = new AccountDAO();
 	
-	public DataAccessLayer() {
-		accDAO = new AccountDAO();
-	}
 	
 	public void createAccount(Account acc) {
-		accDAO.createAccount(acc);
+		accDAO.create(acc);
 	}
 	
 	public void updateAccount(Account acc) {
 		
 	}
 	
-	private static final String ACCOUNTS_FILE = "db/accounts.csv"; // path to accounts.csv
-	
-	//parses data from accounts.csv into an array of accounts
 	public static List<Account> loadAccounts() {
-        List<Account> accounts = new ArrayList<>();
-        File file = new File(ACCOUNTS_FILE);
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-
-            String line;
-            boolean isFirstLine = true;
-
-            while ((line = br.readLine()) != null) {
-                if (isFirstLine) {
-                    isFirstLine = false;
-                    continue;
-                }
-
-                String[] data = line.split(",");
-
-                String name = data[0];
-                LocalDate openingDate = LocalDate.parse(data[1]);
-                double balance = Double.parseDouble(data[2]);
-
-                Account account = new Account(name, openingDate, balance);
-                accounts.add(account);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return accounts;
+        return accDAO.load();
     }
 	
-	/**
-	 * Searches for an account by name in the list of accounts.
-	 *
-	 * This method loads all accounts and iterates through them to find an
-	 * account that matches the specified name. If a matching account is
-	 * found, it is returned. If no matching account is found, the method
-	 * returns null.
-	 *
-	 * @param name the name of the account to search for
-	 * @return the Account object matching the specified name, or null
-	 *         if no account with that name exists
-	 */
 	public static Account searchAccount(String name) {
-		List <Account> accounts = loadAccounts();
-		for (Account acc : accounts) {
-			if (name.equals(acc.getName() ) ) {
-				return acc;
-			}
-		}
-		return null;
+		return accDAO.search(name);
 	}
 
 }
