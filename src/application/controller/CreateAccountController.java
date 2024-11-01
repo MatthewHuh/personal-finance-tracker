@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import application.Account;
-import application.DataAccessLayer;
 import application.dao.AccountDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,13 +39,13 @@ public class CreateAccountController {
     @FXML
     private DatePicker openingDatePicker;
 
-	private DataAccessLayer dal;
+	private AccountDAO accDao;
 
     // set default value in date picker to current date
     @FXML
     public void initialize() {
     	openingDatePicker.setValue(LocalDate.now());
-		dal = new DataAccessLayer(); // initialize accountDAO so that the same one is used
+    	accDao = new AccountDAO(); // initialize accountDAO so that the same one is used
     }   
     
     @FXML
@@ -83,7 +82,7 @@ public class CreateAccountController {
     		accountNameErrorMsg.setText("Please enter the name");
     		inputValidate = false;
     	} // check if name is unique
-    	else if(DataAccessLayer.searchAccount(accountNameText.getText()) != null) {
+    	else if(accDao.search(accountNameText.getText()) != null) {
     		accountNameErrorMsg.setText("Account name taken. Please enter a unique name");
     		inputValidate = false;
     	}
@@ -119,7 +118,7 @@ public class CreateAccountController {
     	if(inputValidate) {
     		//create the account object and create account
     		Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
-    		dal.createAccount(acc);
+    		accDao.create(acc);
     		
 		    try {
 		    	// return to home page
