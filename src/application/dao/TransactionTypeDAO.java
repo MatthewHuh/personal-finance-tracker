@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.opencsv.CSVWriter;
 
-import application.Account;
 import application.TransactionType;
 
 public class TransactionTypeDAO implements DAOInt<TransactionType> {
