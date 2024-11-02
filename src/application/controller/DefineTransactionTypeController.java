@@ -1,10 +1,7 @@
 package application.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-
 import application.TransactionType;
-import application.dao.AccountDAO;
 import application.dao.TransactionTypeDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,7 +58,7 @@ public class DefineTransactionTypeController {
     		inputValidate = false;
     	}
     	else if(dao.search(transactionTypeText.getText()) != null) {
-    		transactionTypeErrorMsg.setText("Account name taken. Please enter a unique name");
+    		transactionTypeErrorMsg.setText("Transaction type already exists. Please enter a unique type");
     		inputValidate = false;
     	}
     	else {

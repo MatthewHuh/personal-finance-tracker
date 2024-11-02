@@ -18,10 +18,10 @@
          <content>
             <AnchorPane>
                <children>
-                  <GridPane layoutX="14.0" layoutY="6.0" prefHeight="102.0" prefWidth="400.0">
+                  <GridPane layoutX="14.0" layoutY="6.0" prefHeight="102.0" prefWidth="481.0">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.60001220703126" minWidth="110.80003204345704" prefWidth="110.80003204345704" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.199967956543" minWidth="224.39998779296874" prefWidth="269.199967956543" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.60001220703126" minWidth="103.20000457763672" prefWidth="111.19998779296876" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="378.3999954223633" minWidth="224.39998779296874" prefWidth="371.20001220703125" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -30,7 +30,7 @@
                      <children>
                         <Label text="Transaction Type" />
                         <TextField fx:id="transactionTypeText" maxWidth="238.0" prefHeight="26.0" prefWidth="190.0" promptText="Enter the name of the transaction type" GridPane.columnIndex="1" />
-                        <Label fx:id="transactionTypeErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Label fx:id="transactionTypeErrorMsg" prefHeight="18.0" prefWidth="322.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
                </children>
