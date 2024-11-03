@@ -176,32 +176,30 @@ public class CreateTransactionController {
             transactionDescErrorMsg.setText("");
         }
 
-        if (paymentAmount.getText().isEmpty()) {
+        if (paymentAmount.getText().isEmpty() && depositAmount.getText().isEmpty()) {
             paymentAmountErrorMsg.setText("Enter payment or deposit amount.");
+            depositAmountErrorMsg.setText("Enter payment or deposit amount.");
             isValid = false;
         } else {
             paymentAmountErrorMsg.setText("");
-            try {
-    			Double.parseDouble(paymentAmount.getText());
-    		} catch(NumberFormatException e) {
-    			paymentAmountErrorMsg.setText("Please enter a valid decimal number");
-    			isValid = false;
-    		}
-        }
-        
-        if(depositAmount.getText().isEmpty()) {
-        	depositAmountErrorMsg.setText("Enter payment or deposit amount.");
-        	isValid = false;
-        } else {
             depositAmountErrorMsg.setText("");
-            try {
-    			Double.parseDouble(depositAmount.getText());
-    		} catch(NumberFormatException e) {
-    			depositAmountErrorMsg.setText("Please enter a valid decimal number");
-    			isValid = false;
-    		}
+            if(!paymentAmount.getText().isEmpty()) {
+	            try {
+	    			Double.parseDouble(paymentAmount.getText());
+	    		} catch(NumberFormatException e) {
+	    			paymentAmountErrorMsg.setText("Please enter a valid decimal number");
+	    			isValid = false;
+	    		}
+            }
+            if(!depositAmount.getText().isEmpty()) {
+	            try {
+	    			Double.parseDouble(depositAmount.getText());
+	    		} catch(NumberFormatException e) {
+	    			depositAmountErrorMsg.setText("Please enter a valid decimal number");
+	    			isValid = false;
+	    		}
+            }
         }
-        
 
         return isValid;
     }
