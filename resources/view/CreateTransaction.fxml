@@ -51,9 +51,9 @@
                         <ChoiceBox fx:id="accountSelect" prefWidth="150.0" GridPane.columnIndex="1" />
                         <ChoiceBox fx:id="transactionSelect" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextArea fx:id="transactionDescription" prefHeight="70.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField fx:id="paymentAmount" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <TextField fx:id="depositAmount" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <TextArea fx:id="transactionDescription" prefHeight="70.0" prefWidth="270.0" promptText="Enter a transaction description" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="paymentAmount" promptText="Enter the payment amount" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="depositAmount" promptText="Enter the deposit amount" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                         <Label fx:id="transactionTypeErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label fx:id="transactionDateErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Label fx:id="transactionDescErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7" />
