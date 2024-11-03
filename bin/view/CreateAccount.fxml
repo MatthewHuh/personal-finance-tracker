@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CreateAccountController">
+<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CreateAccountController">
    <center>
       <ScrollPane prefHeight="210.0" prefWidth="416.0">
          <content>
@@ -39,7 +39,7 @@
                         <TextField fx:id="accountNameText" maxWidth="200.0" promptText="Enter account name" GridPane.columnIndex="1" />
                         <TextField fx:id="openingBalanceText" maxWidth="175.0" promptText="Enter opening balance" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <DatePicker fx:id="openingDatePicker" onAction="#onDateAction" prefHeight="26.0" prefWidth="110.0" promptText="Select a date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="accountNameErrorMsg" prefHeight="18.0" prefWidth="200.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Label fx:id="accountNameErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                         <Label fx:id="openingDateErrorMsg" prefHeight="18.0" prefWidth="203.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                         <Label fx:id="openingBalanceErrorMsg" prefHeight="18.0" prefWidth="261.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                      </children>
