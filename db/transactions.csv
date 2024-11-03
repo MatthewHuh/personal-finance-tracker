@@ -1,3 +1,1 @@
-huy,2024-11-02,12345.0,groceries,2024-11-02,buying groceries for the week,100.0,0.0
-huy,2024-11-02,12345.0,rent,2024-11-02,monthly rent,500.0,0.0
-test,2024-11-02,100000.0,rent,2024-11-02,paying rent for the month,1000.0,0.0
+account,type,date,description,payAmount,depAmount

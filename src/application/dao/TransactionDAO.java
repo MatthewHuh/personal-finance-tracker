@@ -30,8 +30,6 @@ public class TransactionDAO implements DAOInt<Transaction> {
 
 			String[] data = {
 					obj.getAccount().getName(),
-					obj.getAccount().getOpeningDate().toString(),
-					String.valueOf(obj.getAccount().getBalance()),
 					obj.getTransactionType().getTransactionType(),
 					obj.getTransactionDate().toString(),
 					obj.getDescription(),
@@ -71,15 +69,14 @@ public class TransactionDAO implements DAOInt<Transaction> {
 				String[] data = line.split(",");
 
 				String accountName = data[0];
-				LocalDate openingDate = LocalDate.parse(data[1]);
-				double accountBalance = Double.parseDouble(data[2]);
-				Account account = new Account(accountName, openingDate, accountBalance);
+				AccountDAO accDao = new AccountDAO();
+				Account account = accDao.search(accountName);
 
-				TransactionType transactionType = new TransactionType(data[3]);
-				LocalDate transactionDate = LocalDate.parse(data[4]);
-				String description = data[5];
-				double paymentAmount = Double.parseDouble(data[6]);
-				double depositAmount = Double.parseDouble(data[7]);
+				TransactionType transactionType = new TransactionType(data[1]);
+				LocalDate transactionDate = LocalDate.parse(data[2]);
+				String description = data[3];
+				double paymentAmount = Double.parseDouble(data[4]);
+				double depositAmount = Double.parseDouble(data[5]);
 
 				Transaction transaction = new Transaction(account, transactionType, transactionDate, description, paymentAmount, depositAmount);
 				transactions.add(transaction);
