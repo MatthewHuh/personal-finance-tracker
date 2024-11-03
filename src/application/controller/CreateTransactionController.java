@@ -127,24 +127,22 @@ public class CreateTransactionController {
             transactionDAO.create(transaction);
 
             // Close window or navigate to another page if needed
-            ((Stage) accountSelect.getScene().getWindow()).close();
+            try {
+        		// Load the Home.fxml file
+        		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+        		
+        		// Get the current stage
+    			Stage stage = (Stage) createAccountPane.getScene().getWindow();
+    			
+    			// Set the new scene
+    			stage.setScene(new Scene(homeView));
+    			stage.setTitle("Home"); // Optional: Set the window title
+    			stage.show();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
         }	
-    	try {
-    		// Load the Home.fxml file
-    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-    		
-    		// Get the current stage
-			Stage stage = (Stage) createAccountPane.getScene().getWindow();
-			
-			// Set the new scene
-			stage.setScene(new Scene(homeView));
-			stage.setTitle("Home"); // Optional: Set the window title
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
     }
     
     private boolean validateFields() {
@@ -178,14 +176,32 @@ public class CreateTransactionController {
             transactionDescErrorMsg.setText("");
         }
 
-        if (paymentAmount.getText().isEmpty() && depositAmount.getText().isEmpty()) {
+        if (paymentAmount.getText().isEmpty()) {
             paymentAmountErrorMsg.setText("Enter payment or deposit amount.");
-            depositAmountErrorMsg.setText("Enter payment or deposit amount.");
             isValid = false;
         } else {
             paymentAmountErrorMsg.setText("");
-            depositAmountErrorMsg.setText("");
+            try {
+    			Double.parseDouble(paymentAmount.getText());
+    		} catch(NumberFormatException e) {
+    			paymentAmountErrorMsg.setText("Please enter a valid decimal number");
+    			isValid = false;
+    		}
         }
+        
+        if(depositAmount.getText().isEmpty()) {
+        	depositAmountErrorMsg.setText("Enter payment or deposit amount.");
+        	isValid = false;
+        } else {
+            depositAmountErrorMsg.setText("");
+            try {
+    			Double.parseDouble(depositAmount.getText());
+    		} catch(NumberFormatException e) {
+    			depositAmountErrorMsg.setText("Please enter a valid decimal number");
+    			isValid = false;
+    		}
+        }
+        
 
         return isValid;
     }
