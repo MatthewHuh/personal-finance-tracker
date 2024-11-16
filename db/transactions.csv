@@ -1,1 +1,5 @@
 account,type,date,description,payAmount,depAmount
+test,test,2024-11-02,test,1234.0,1234.0
+test,test,2024-11-02,test,1234.0,0.0
+test,test,2024-11-02,test,0.0,1234.0
+test,test,2024-11-02,test,1234.0,434432.0
