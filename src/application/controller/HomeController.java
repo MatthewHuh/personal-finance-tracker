@@ -44,9 +44,12 @@ public class HomeController {
 
     @FXML
     private Button scheduleTransactionButton;
-
+    
     @FXML
-    private Button searchTransactionButton;
+    private Button viewTransactionsButton;
+    
+    @FXML
+    private Button viewScheduledTransactionsButton;
 
     @FXML
     private Button viewReportsButton;
@@ -125,12 +128,57 @@ public class HomeController {
 
     @FXML
     void onScheduleTransaction(ActionEvent event) {
+    	try {
+            // Load the CreateTransaction.fxml file
+            Parent scheduleTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ScheduleTransaction.fxml"));
 
+            // Get the current stage
+            Stage stage = (Stage) scheduleTransactionButton.getScene().getWindow();
+
+            // Set the new scene
+            stage.setScene(new Scene(scheduleTransactionView));
+            stage.setTitle("Schedule New Transaction"); // Set the window title
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace for any errors
+        }
+    }
+    
+
+    @FXML
+    void onViewTransaction(ActionEvent event) {
+    	try {
+            // Load the CreateTransaction.fxml file
+            Parent viewTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewTransactions.fxml"));
+
+            // Get the current stage
+            Stage stage = (Stage) viewTransactionsButton.getScene().getWindow();
+
+            // Set the new scene
+            stage.setScene(new Scene(viewTransactionView));
+            stage.setTitle("View Transaction"); // Set the window title
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace for any errors
+        }
     }
 
     @FXML
-    void onSearchTransaction(ActionEvent event) {
+    void onViewScheduledTransaction(ActionEvent event) {
+    	try {
+            // Load the CreateTransaction.fxml file
+            Parent viewScheduledTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewScheduledTransactions.fxml"));
 
+            // Get the current stage
+            Stage stage = (Stage) viewScheduledTransactionsButton.getScene().getWindow();
+
+            // Set the new scene
+            stage.setScene(new Scene(viewScheduledTransactionView));
+            stage.setTitle("View Scheduled Transaction"); // Set the window title
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace for any errors
+        }
     }
 
     @FXML

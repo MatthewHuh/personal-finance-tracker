@@ -25,10 +25,11 @@
         <VBox alignment="CENTER" prefHeight="474.0" prefWidth="179.0" spacing="30.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="createNewAccountButton" mnemonicParsing="false" onAction="#onCreateNewAccount" text="Create New Account" />
-                <Button fx:id="defineNewTransactionButton" mnemonicParsing="false" onAction="#onDefineNewTransaction" text="Define New Transaction Type" />
                 <Button fx:id="enterTransactionButton" mnemonicParsing="false" onAction="#onEnterTransaction" text="Enter Transaction/Expense" />
                 <Button fx:id="scheduleTransactionButton" mnemonicParsing="false" onAction="#onScheduleTransaction" text="Schedule a Transaction" />
-                <Button fx:id="searchTransactionButton" mnemonicParsing="false" onAction="#onSearchTransaction" text="Search For Transaction" />
+                <Button fx:id="defineNewTransactionButton" mnemonicParsing="false" onAction="#onDefineNewTransaction" text="Define New Transaction Type" />
+            <Button fx:id="viewTransactionsButton" mnemonicParsing="false" onAction="#onViewTransaction" text="View Transactions" />
+            <Button fx:id="viewScheduledTransactionsButton" mnemonicParsing="false" onAction="#onViewScheduledTransaction" text="View Scheduled Transactions" />
                 <Button fx:id="viewReportsButton" mnemonicParsing="false" onAction="#onViewReports" text="View Reports" />
             </children>
         </VBox>
