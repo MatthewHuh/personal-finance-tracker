@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ScheduleTransactionController">
+<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ScheduleTransactionController">
    <center>
       <ScrollPane prefHeight="210.0" prefWidth="416.0">
          <content>
@@ -40,7 +40,7 @@
                      </rowConstraints>
                      <children>
                         <Label text="Schedule Name" />
-                        <Label fx:id="AccountErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Label fx:id="nameErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                         <Label text="Account" GridPane.rowIndex="2" />
                         <Label text="Transaction Type" GridPane.rowIndex="4" />
                         <Label alignment="TOP_LEFT" text="Frequency" GridPane.rowIndex="6" />
@@ -49,11 +49,11 @@
                         <ChoiceBox fx:id="accountSelect" prefHeight="26.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="dueDate" promptText="Enter the due date" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <TextField fx:id="paymentAmount" promptText="Enter the payment amount" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                        <Label fx:id="transactionTypeErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-                        <Label fx:id="transactionDateErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-                        <Label fx:id="transactionDescErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="TOP" />
-                        <Label fx:id="paymentAmountErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="TOP" />
-                        <Label fx:id="depositAmountErrorMsg" prefHeight="11.0" prefWidth="270.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.valignment="TOP" />
+                        <Label fx:id="accountErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                        <Label fx:id="transactionTypeErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                        <Label fx:id="frequencyErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+                        <Label fx:id="dueDateErrorMsg" prefHeight="18.0" prefWidth="294.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.valignment="TOP" />
+                        <Label fx:id="amountErrorMsg" prefHeight="11.0" prefWidth="270.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.valignment="TOP" />
                         <TextField fx:id="scheduleName" promptText="Enter the schedule name" GridPane.columnIndex="1" />
                         <ChoiceBox fx:id="typeSelect" prefHeight="26.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <ChoiceBox fx:id="frequencySelect" prefHeight="26.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
