@@ -108,6 +108,9 @@ public class ViewTransactionsController {
         List<Transaction> transactions = transactionDAO.load();
         ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(transactions);
         transactionTable.setItems(observableTransactions);
+        
+        // sort by transactionDate descending
+        transactionTable.getSortOrder().add(transactionDateCol);
     }
 
 }

@@ -89,7 +89,12 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction> {
 
 	@Override
 	public ScheduledTransaction search(String id) {
-		// TODO Auto-generated method stub
+		List <ScheduledTransaction> scheduledTransactions = load();
+		for (ScheduledTransaction tran : scheduledTransactions) {
+			if (id.equals(tran.getScheduleName() ) ) {
+				return tran;
+			}
+		}
 		return null;
 	}
 
