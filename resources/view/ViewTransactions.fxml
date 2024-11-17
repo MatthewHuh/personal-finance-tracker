@@ -32,7 +32,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Transactions" />
-            <TableView fx:id="transactionDescriptionTable" prefHeight="442.0" prefWidth="500.0">
+            <TableView fx:id="transactionTable" prefHeight="442.0" prefWidth="500.0">
                <columns>
                   <TableColumn fx:id="accountCol" prefWidth="89.60000610351562" text="Account" />
                   <TableColumn fx:id="transactionTypeCol" prefWidth="120.00001525878906" text="Transaction Type" />
