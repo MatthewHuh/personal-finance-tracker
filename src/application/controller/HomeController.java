@@ -17,7 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 import application.dao.AccountDAO;
 
-import java.util.List;
+import java.util.Map;
 
 public class HomeController {
 
@@ -63,9 +63,9 @@ public class HomeController {
 
         // Load accounts from the CSV file
         AccountDAO acc = new AccountDAO();
-        List<Account> accounts = acc.load();
+        Map<String, Account> accounts = acc.getAccounts();
         if (accounts != null) {
-            ObservableList<Account> accountList = FXCollections.observableArrayList(accounts);
+            ObservableList<Account> accountList = FXCollections.observableArrayList(accounts.values());
             accountTable.setItems(accountList);
         }
         // sort by opening date descending

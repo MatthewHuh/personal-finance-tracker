@@ -1,7 +1,7 @@
 package application.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 import application.ScheduledTransaction;
 import application.dao.ScheduledTransactionDAO;
@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -47,6 +48,13 @@ public class ViewScheduledTransactionsController {
 
     @FXML
     private TableColumn<ScheduledTransaction, String> transactionTypeCol;
+    
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private TextField searchText;
+    
     @FXML
     public void initialize() {
         // Set up the columns to match Account class properties
@@ -63,9 +71,9 @@ public class ViewScheduledTransactionsController {
 
         // Load accounts from the CSV file
         ScheduledTransactionDAO acc = new ScheduledTransactionDAO();
-        List<ScheduledTransaction> scheduledTransactions = acc.load();
+        Map<String, ScheduledTransaction> scheduledTransactions = acc.getScheduledTransactions();
         if (scheduledTransactions != null) {
-            ObservableList<ScheduledTransaction> accountList = FXCollections.observableArrayList(scheduledTransactions);
+            ObservableList<ScheduledTransaction> accountList = FXCollections.observableArrayList(scheduledTransactions.values());
             scheduledTransactionTable.setItems(accountList);
         }
         // sort by opening date descending
@@ -88,6 +96,11 @@ public class ViewScheduledTransactionsController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    
+    @FXML
+    void onSearch(ActionEvent event) {
+    	
     }
 
 }

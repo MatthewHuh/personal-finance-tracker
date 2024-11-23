@@ -1,1 +1,3 @@
 name,account,type,frequency,dueDate,amount
+Payday,Bank of America Checking,paycheck,Monthly,31,1000.0
+Rent,Bank of America Checking,rent,Monthly,25,500.0

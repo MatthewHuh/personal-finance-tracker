@@ -1,15 +1,13 @@
 package application.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 import application.Account;
 import application.ScheduledTransaction;
 import application.TransactionType;
 import application.dao.AccountDAO;
 import application.dao.ScheduledTransactionDAO;
-import application.dao.TransactionDAO;
 import application.dao.TransactionTypeDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,17 +64,17 @@ public class ScheduleTransactionController {
     private final ScheduledTransactionDAO scheduledTransactionDAO = new ScheduledTransactionDAO();
     private final AccountDAO accountDAO = new AccountDAO();
     private final TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO();
-    private List<Account> accounts;
-    private List<TransactionType> transactionTypes;
+    private Map<String, Account> accounts;
+    private Map<String, TransactionType> transactionTypes;
     
     public void initialize() {
         // Populate account and transaction type ChoiceBoxes
-        accounts = accountDAO.load();
-        accountSelect.getItems().addAll(accounts.stream().map(Account::getName).toArray(String[]::new));
+        accounts = accountDAO.getAccounts();
+        accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().selectFirst(); // Set default to first item
 
-        transactionTypes = transactionTypeDAO.load();
-        typeSelect.getItems().addAll(transactionTypes.stream().map(TransactionType::getTransactionType).toArray(String[]::new));
+        transactionTypes = transactionTypeDAO.getTransactionTypes();
+        typeSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
         typeSelect.getSelectionModel().selectFirst(); // Set default to first item
         
         frequencySelect.getItems().add("Monthly");
@@ -106,8 +104,8 @@ public class ScheduleTransactionController {
     void onSubmitAction(ActionEvent event) {
     	if(validate()) {
     		String name = scheduleName.getText();
-    		Account account = accountDAO.search(accountSelect.getValue());
-    		TransactionType type = transactionTypeDAO.search(typeSelect.getValue());
+    		Account account = accountDAO.getAccounts().get(accountSelect.getValue());
+    		TransactionType type = transactionTypeDAO.getTransactionTypes().get(typeSelect.getValue());
     		String frequency = frequencySelect.getValue();
     		int due = Integer.parseInt(dueDate.getText());
     		double amount = Double.parseDouble(paymentAmount.getText());

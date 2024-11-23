@@ -5,8 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.opencsv.CSVWriter;
 
@@ -14,8 +15,9 @@ import application.Account;
 import application.ScheduledTransaction;
 import application.TransactionType;
 
-public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction> {
+public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, SearchableDAO<ScheduledTransaction> {
 	private static final String TRANSACTION_FILE = "db/scheduledTransactions.csv"; // Path to scheduledTransactions.csv
+	private static final Map<String, ScheduledTransaction> SCHEDULED_TRANSACTIONS = load();
 	
 	@Override
 	public void create(ScheduledTransaction obj) {
@@ -37,6 +39,8 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction> {
 			};
 
 			writer.writeNext(data);
+			
+			SCHEDULED_TRANSACTIONS.put(obj.getScheduleName(), obj);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -48,10 +52,15 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction> {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public List<ScheduledTransaction> load() {
-		List<ScheduledTransaction> scheduledTransactions = new ArrayList<>();
+	public List<ScheduledTransaction> search(String subStr) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static HashMap<String, ScheduledTransaction> load() {
+		HashMap<String, ScheduledTransaction> scheduledTransactions = new HashMap<>();
 		File file = new File(TRANSACTION_FILE);
 
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -69,7 +78,8 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction> {
 				String scheduleName = data[0];
 				String accountName = data[1];
 				AccountDAO accDao = new AccountDAO();
-				Account account = accDao.search(accountName);
+				Map<String, Account> accounts = accDao.getAccounts();
+				Account account = accounts.get(accountName);
 
 				TransactionType transactionType = new TransactionType(data[2]);
 				String frequency = data[3];
@@ -77,7 +87,7 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction> {
 				double amount = Double.parseDouble(data[5]);
 
 				ScheduledTransaction transaction = new ScheduledTransaction(scheduleName, account, transactionType, frequency, dueDate, amount);
-				scheduledTransactions.add(transaction);
+				scheduledTransactions.put(scheduleName, transaction);
 			}
 
 		} catch (IOException e) {
@@ -87,15 +97,7 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction> {
 		return scheduledTransactions;
 	}
 
-	@Override
-	public ScheduledTransaction search(String id) {
-		List <ScheduledTransaction> scheduledTransactions = load();
-		for (ScheduledTransaction tran : scheduledTransactions) {
-			if (id.equals(tran.getScheduleName() ) ) {
-				return tran;
-			}
-		}
-		return null;
+	public Map<String, ScheduledTransaction> getScheduledTransactions() {
+		return SCHEDULED_TRANSACTIONS;
 	}
-
 }

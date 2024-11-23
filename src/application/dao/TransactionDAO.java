@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
@@ -15,8 +16,9 @@ import application.Transaction;
 import application.Account;
 import application.TransactionType;
 
-public class TransactionDAO implements DAOInt<Transaction> {
+public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transaction> {
 	private static final String TRANSACTION_FILE = "db/transactions.csv"; // Path to transactions.csv
+	private static final List<Transaction> TRANSACTIONS = load();
 
 	@Override
 	public void create(Transaction obj) {
@@ -38,6 +40,8 @@ public class TransactionDAO implements DAOInt<Transaction> {
 			};
 
 			writer.writeNext(data);
+			
+			TRANSACTIONS.add(obj);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -50,9 +54,14 @@ public class TransactionDAO implements DAOInt<Transaction> {
 		// TODO Auto-generated method stub
 
 	}
-
+	
 	@Override
-	public List<Transaction> load() {
+	public List<Transaction> search(String subStr) {
+		// TODO Auto-generated method stub
+		return null;
+	}	
+	
+	private static List<Transaction> load() {
 		List<Transaction> transactions = new ArrayList<>();
 		File file = new File(TRANSACTION_FILE);
 
@@ -70,7 +79,8 @@ public class TransactionDAO implements DAOInt<Transaction> {
 
 				String accountName = data[0];
 				AccountDAO accDao = new AccountDAO();
-				Account account = accDao.search(accountName);
+				Map<String, Account> accounts = accDao.getAccounts();
+				Account account = accounts.get(accountName);
 
 				TransactionType transactionType = new TransactionType(data[1]);
 				LocalDate transactionDate = LocalDate.parse(data[2]);
@@ -89,10 +99,7 @@ public class TransactionDAO implements DAOInt<Transaction> {
 		return transactions;
 	}
 
-	@Override
-	public Transaction search(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Transaction> getTransactions() {
+		return TRANSACTIONS;
 	}
-
 }

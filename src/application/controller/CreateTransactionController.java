@@ -2,7 +2,7 @@ package application.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -69,17 +69,17 @@ public class CreateTransactionController {
     private final TransactionDAO transactionDAO = new TransactionDAO();
     private final AccountDAO accountDAO = new AccountDAO();
     private final TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO();
-    private List<Account> accounts;
-    private List<TransactionType> transactionTypes;
+    private Map<String, Account> accounts;
+    private Map<String, TransactionType> transactionTypes;
 
     public void initialize() {
         // Populate account and transaction type ChoiceBoxes
-        accounts = accountDAO.load();
-        accountSelect.getItems().addAll(accounts.stream().map(Account::getName).toArray(String[]::new));
+        accounts = accountDAO.getAccounts();
+        accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().selectFirst(); // Set default to first item
 
-        transactionTypes = transactionTypeDAO.load();
-        transactionSelect.getItems().addAll(transactionTypes.stream().map(TransactionType::getTransactionType).toArray(String[]::new));
+        transactionTypes = transactionTypeDAO.getTransactionTypes();
+        transactionSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
         transactionSelect.getSelectionModel().selectFirst(); // Set default to first item
 
         // Set default date to today
@@ -108,12 +108,12 @@ public class CreateTransactionController {
     @FXML
     void onSubmitAction(ActionEvent event) {
     	if (validateFields()) {
-            Account selectedAccount = accounts.stream()
+            Account selectedAccount = accounts.values().stream()
                 .filter(a -> a.getName().equals(accountSelect.getValue()))
                 .findFirst()
                 .orElse(null);
 
-            TransactionType selectedTransactionType = transactionTypes.stream()
+            TransactionType selectedTransactionType = transactionTypes.values().stream()
                 .filter(t -> t.getTransactionType().equals(transactionSelect.getValue()))
                 .findFirst()
                 .orElse(null);

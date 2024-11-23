@@ -74,6 +74,32 @@ public class CreateAccountController {
 
     @FXML
     void onSubmitAction(ActionEvent event) {
+    	// verify valid inputs
+    	if(inputValidate()) {
+    		//create the account object and create account
+    		Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
+    		accDao.create(acc);
+    		
+		    try {
+		    	// return to home page
+		    	// Load the Home.fxml file
+		    	Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+	
+		    	// Get the current stage
+				Stage stage = (Stage) createAccountPane.getScene().getWindow();
+					
+				// Set the new scene
+				stage.setScene(new Scene(homeView));
+				stage.setTitle("Home"); // Set the window title
+				stage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    }
+    
+    private boolean inputValidate() {
     	// boolean to verify valid inputs
     	boolean inputValidate = true;
     	
@@ -82,7 +108,7 @@ public class CreateAccountController {
     		accountNameErrorMsg.setText("Please enter the name");
     		inputValidate = false;
     	} // check if name is unique
-    	else if(accDao.search(accountNameText.getText()) != null) {
+    	else if(accDao.getAccounts().get(accountNameText.getText()) != null) {
     		accountNameErrorMsg.setText("Account name taken. Please enter a unique name");
     		inputValidate = false;
     	}
@@ -113,30 +139,7 @@ public class CreateAccountController {
         		inputValidate = false;
     		}
     	}
-    	
-    	// verify valid inputs
-    	if(inputValidate) {
-    		//create the account object and create account
-    		Account acc = new Account(accountNameText.getText(), openingDatePicker.getValue(), Double.parseDouble(openingBalanceText.getText()));
-    		accDao.create(acc);
-    		
-		    try {
-		    	// return to home page
-		    	// Load the Home.fxml file
-		    	Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-	
-		    	// Get the current stage
-				Stage stage = (Stage) createAccountPane.getScene().getWindow();
-					
-				// Set the new scene
-				stage.setScene(new Scene(homeView));
-				stage.setTitle("Home"); // Set the window title
-				stage.show();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
+    	return inputValidate;
     }
     
 }
