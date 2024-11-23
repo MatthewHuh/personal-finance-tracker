@@ -1,10 +1,13 @@
 package application.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import application.ScheduledTransaction;
+import application.Transaction;
 import application.dao.ScheduledTransactionDAO;
+import application.dao.TransactionDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,6 +57,8 @@ public class ViewScheduledTransactionsController {
 
     @FXML
     private TextField searchText;
+
+    private final ScheduledTransactionDAO scheduledTransactionDAO = new ScheduledTransactionDAO();
     
     @FXML
     public void initialize() {
@@ -100,7 +105,11 @@ public class ViewScheduledTransactionsController {
     
     @FXML
     void onSearch(ActionEvent event) {
-    	
+        String searchInput = searchText.getText().trim();// get search input
+        List<ScheduledTransaction> searchResults = scheduledTransactionDAO.search(searchInput);// search scheduled transactions by name
+        ObservableList<ScheduledTransaction> observableResults = FXCollections.observableArrayList(searchResults);// convert results to observable list
+        scheduledTransactionTable.setItems(observableResults);// update table
+        scheduledTransactionTable.getSortOrder().clear();// clear sort order to view results correctly
     }
 
 }

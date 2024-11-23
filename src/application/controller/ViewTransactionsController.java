@@ -121,6 +121,10 @@ public class ViewTransactionsController {
     
     @FXML
     void onSearch(ActionEvent event) {
-    	
+        String searchInput = searchText.getText().trim(); // get search input
+        List<Transaction> searchResults = transactionDAO.search(searchInput); // search transactions by description
+        ObservableList<Transaction> observableResults = FXCollections.observableArrayList(searchResults); // convert results to observable list
+        transactionTable.setItems(observableResults); // update table
+        transactionTable.getSortOrder().clear();// clear sort order to view results correctly
     }
 }

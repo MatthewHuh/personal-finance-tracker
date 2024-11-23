@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 import com.opencsv.CSVWriter;
 
@@ -55,8 +56,15 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 	
 	@Override
 	public List<ScheduledTransaction> search(String subStr) {
-		// TODO Auto-generated method stub
-		return null;
+		List<ScheduledTransaction> results = new ArrayList<>();
+
+		for (ScheduledTransaction transaction : SCHEDULED_TRANSACTIONS.values()) {
+			if (transaction.getScheduleName().toLowerCase().contains(subStr.toLowerCase())) {
+				results.add(transaction);
+			}
+		}
+
+		return results;
 	}
 
 	private static HashMap<String, ScheduledTransaction> load() {
