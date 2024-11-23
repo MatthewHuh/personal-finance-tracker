@@ -51,6 +51,12 @@ public class ViewTransactionsController {
 
     @FXML
     private BorderPane createAccountPane;
+    
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private TextField searchText;
 
 
     private final TransactionDAO transactionDAO = new TransactionDAO();
@@ -105,12 +111,16 @@ public class ViewTransactionsController {
 		});
 		
         // Load transactions from DAO and populate TableView
-        List<Transaction> transactions = transactionDAO.load();
+        List<Transaction> transactions = transactionDAO.getTransactions();
         ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(transactions);
         transactionTable.setItems(observableTransactions);
         
         // sort by transactionDate descending
         transactionTable.getSortOrder().add(transactionDateCol);
     }
-
+    
+    @FXML
+    void onSearch(ActionEvent event) {
+    	
+    }
 }

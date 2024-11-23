@@ -57,7 +57,7 @@ public class DefineTransactionTypeController {
     		transactionTypeErrorMsg.setText("Please enter the transaction type");
     		inputValidate = false;
     	}
-    	else if(dao.search(transactionTypeText.getText()) != null) {
+    	else if(dao.getTransactionTypes().get(transactionTypeText.getText()) != null) {
     		transactionTypeErrorMsg.setText("Transaction type already exists. Please enter a unique type");
     		inputValidate = false;
     	}

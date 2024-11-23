@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.opencsv.CSVWriter;
 
@@ -16,6 +16,7 @@ import application.Account;
 public class AccountDAO implements DAOInt<Account>{
 	
 	private static final String ACCOUNTS_FILE = "db/accounts.csv"; // path to accounts.csv
+	private static final Map<String, Account> ACCOUNTS = load();
 	
 	@Override
 	public void create(Account obj) {
@@ -35,6 +36,8 @@ public class AccountDAO implements DAOInt<Account>{
 	  
 	        // closing writer connection 
 	        writer.close(); 
+	        
+	        ACCOUNTS.put(obj.getName(), obj);
 	    } 
 	    catch (IOException e) { 
 	        // TODO Auto-generated catch block 
@@ -48,10 +51,9 @@ public class AccountDAO implements DAOInt<Account>{
 		
 	}
 
-	@Override
 	//parses data from accounts.csv into an array of accounts
-	public List<Account> load() {
-		List<Account> accounts = new ArrayList<>();
+	private static Map<String, Account> load() {
+		HashMap<String, Account> accounts = new HashMap<>();
         File file = new File(ACCOUNTS_FILE);
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -72,7 +74,7 @@ public class AccountDAO implements DAOInt<Account>{
                 double balance = Double.parseDouble(data[2]);
 
                 Account account = new Account(name, openingDate, balance);
-                accounts.add(account);
+                accounts.put(account.getName(), account);
             }
 
         } catch (Exception e) {
@@ -81,29 +83,8 @@ public class AccountDAO implements DAOInt<Account>{
 
         return accounts;
 	}
-
-	/**
-	 * Searches for an account by name in the list of accounts.
-	 *
-	 * This method loads all accounts and iterates through them to find an
-	 * account that matches the specified name. If a matching account is
-	 * found, it is returned. If no matching account is found, the method
-	 * returns null.
-	 *
-	 * @param name the name of the account to search for
-	 * @return the Account object matching the specified name, or null
-	 *         if no account with that name exists
-	 */
-	@Override
-	public Account search(String id) {
-		List <Account> accounts = load();
-		for (Account acc : accounts) {
-			if (id.equals(acc.getName() ) ) {
-				return acc;
-			}
-		}
-		return null;
+	
+	public Map<String, Account> getAccounts() {
+		return ACCOUNTS;
 	}
-	
-	
 }

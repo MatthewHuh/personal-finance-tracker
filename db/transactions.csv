@@ -1,1 +1,3 @@
 account,type,date,description,payAmount,depAmount
+Bank of America Checking,paycheck,2024-10-31,Payday,0.0,1000.0
+US Bank Savings,loan payment,2024-11-23,car payment,700.0,0.0

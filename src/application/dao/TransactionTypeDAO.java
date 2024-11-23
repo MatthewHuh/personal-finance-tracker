@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.opencsv.CSVWriter;
 
@@ -15,6 +15,7 @@ import application.TransactionType;
 public class TransactionTypeDAO implements DAOInt<TransactionType> {
 
 	private static final String TRANSACTION_TYPE_FILE = "db/transactionTypes.csv"; // path to accounts.csv
+	private static final Map<String, TransactionType> TRANSACTION_TYPES = load();
 
 	@Override
 	public void create(TransactionType obj) {
@@ -33,6 +34,9 @@ public class TransactionTypeDAO implements DAOInt<TransactionType> {
 	  
 	        // closing writer connection 
 	        writer.close(); 
+	        
+	        //
+	        TRANSACTION_TYPES.put(obj.getTransactionType(), obj);
 	    } 
 	    catch (IOException e) { 
 	        // TODO Auto-generated catch block 
@@ -47,9 +51,8 @@ public class TransactionTypeDAO implements DAOInt<TransactionType> {
 		
 	}
 
-	@Override
-	public List<TransactionType> load() {
-		List<TransactionType> types = new ArrayList<>();
+	private static HashMap<String, TransactionType> load() {
+		HashMap<String, TransactionType> types = new HashMap<>();
         File file = new File(TRANSACTION_TYPE_FILE);
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -68,7 +71,7 @@ public class TransactionTypeDAO implements DAOInt<TransactionType> {
                 String name = data[0];
 
                 TransactionType type = new TransactionType(name);
-                types.add(type);
+                types.put(type.getTransactionType(), type);
             }
 
         } catch (Exception e) {
@@ -77,15 +80,8 @@ public class TransactionTypeDAO implements DAOInt<TransactionType> {
 
         return types;
 	}
-
-	@Override
-	public TransactionType search(String id) {
-		List <TransactionType> types = load();
-		for (TransactionType type : types) {
-			if (id.equals(type.getTransactionType() ) ) {
-				return type;
-			}
-		}
-		return null;
+	
+	public Map<String, TransactionType> getTransactionTypes() {
+		return TRANSACTION_TYPES;
 	}
 }
