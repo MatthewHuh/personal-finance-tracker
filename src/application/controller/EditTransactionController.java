@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 public class EditTransactionController {
 
 	@FXML
-    private Label AccountErrorMsg;
+    private Label accountErrorMsg;
 
     @FXML
     private ChoiceBox<String> accountSelect;
@@ -84,7 +84,7 @@ public class EditTransactionController {
         typeSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
         typeSelect.getSelectionModel().select(transaction.getTransactionType().getTransactionType()); // Set default to current transaction type
         
-        datePicker.setValue(LocalDate.now());
+        datePicker.setValue(transaction.getTransactionDate());
         
         transactionDescription.setText(transaction.getDescription());
         

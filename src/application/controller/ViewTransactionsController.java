@@ -2,6 +2,7 @@ package application.controller;
 
 import java.io.IOException;
 
+import application.ScheduledTransaction;
 import application.Transaction;
 import application.dao.TransactionDAO;
 import javafx.beans.property.*;
@@ -112,9 +113,10 @@ public class ViewTransactionsController {
 		
         // Load transactions from DAO and populate TableView
         List<Transaction> transactions = transactionDAO.getTransactions();
-        ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(transactions);
-        transactionTable.setItems(observableTransactions);
-        
+        if (transactionTable != null) {
+        	ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(transactions);
+            transactionTable.setItems(observableTransactions);
+        }
         // sort by transactionDate descending
         transactionTable.getSortOrder().add(transactionDateCol);
         
