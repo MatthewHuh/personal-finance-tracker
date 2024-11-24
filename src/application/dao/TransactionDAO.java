@@ -1,6 +1,7 @@
 package application.dao;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,7 +11,9 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 import application.Transaction;
 import application.Account;
@@ -52,7 +55,45 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 	@Override
 	public void update(Transaction curr, Transaction updated) {
 		// TODO Auto-generated method stub
-
+		try {
+			CSVReader reader = new CSVReader(new FileReader(new File(TRANSACTION_FILE)));
+			List<String[]> transactions = reader.readAll();
+			
+			for(int i = 0; i < transactions.size(); i++) {
+				if(curr.getDescription().equals(transactions.get(i)[3])) {
+					String[] data = {
+							updated.getAccount().getName(),
+							updated.getTransactionType().getTransactionType(),
+							updated.getTransactionDate().toString(),
+							updated.getDescription(),
+							String.valueOf(updated.getPaymentAmount() ),
+							String.valueOf(updated.getDepositAmount() )
+					};
+					transactions.set(i, data);
+				}
+			}
+			File file = new File(TRANSACTION_FILE);
+			FileWriter outputfile = new FileWriter(file, false);
+				 CSVWriter writer = new CSVWriter(outputfile, ',',
+						 CSVWriter.NO_QUOTE_CHARACTER,
+						 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+						 CSVWriter.DEFAULT_LINE_END);
+				 writer.writeAll(transactions);
+				 
+				 TRANSACTIONS.remove(curr);
+				 TRANSACTIONS.add(updated);
+				 writer.close();
+				 reader.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CsvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
