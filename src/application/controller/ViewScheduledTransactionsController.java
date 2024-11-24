@@ -1,10 +1,13 @@
 package application.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import application.ScheduledTransaction;
+import application.Transaction;
 import application.dao.ScheduledTransactionDAO;
+import application.dao.TransactionDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -54,6 +58,8 @@ public class ViewScheduledTransactionsController {
 
     @FXML
     private TextField searchText;
+
+    private final ScheduledTransactionDAO scheduledTransactionDAO = new ScheduledTransactionDAO();
     
     @FXML
     public void initialize() {
@@ -78,6 +84,31 @@ public class ViewScheduledTransactionsController {
         }
         // sort by opening date descending
         scheduledTransactionTable.getSortOrder().add(dueDateCol);
+        
+     // add click able rows
+        scheduledTransactionTable.setRowFactory( tv -> {
+            TableRow<ScheduledTransaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+            	ScheduledTransaction rowData = row.getItem();
+            	EditScheduledTransactionController.initializeScheduledTransaction(rowData);
+            	try {
+    	    		// Load the Home.fxml file
+    	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditScheduledTransaction.fxml"));
+    	    		
+    	    		// Get the current stage
+    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
+    				
+    				// Set the new scene
+    				stage.setScene(new Scene(homeView));
+    				stage.setTitle("Home"); // Optional: Set the window title
+    				stage.show();
+    			} catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+            });
+            return row ;
+        });
     }
     @FXML
     void onBack(ActionEvent event) {
@@ -100,7 +131,11 @@ public class ViewScheduledTransactionsController {
     
     @FXML
     void onSearch(ActionEvent event) {
-    	
+        String searchInput = searchText.getText().trim();// get search input
+        List<ScheduledTransaction> searchResults = scheduledTransactionDAO.search(searchInput);// search scheduled transactions by name
+        ObservableList<ScheduledTransaction> observableResults = FXCollections.observableArrayList(searchResults);// convert results to observable list
+        scheduledTransactionTable.setItems(observableResults);// update table
+        scheduledTransactionTable.getSortOrder().clear();// clear sort order to view results correctly
     }
 
 }

@@ -117,10 +117,24 @@ public class ViewTransactionsController {
         
         // sort by transactionDate descending
         transactionTable.getSortOrder().add(transactionDateCol);
+        
+        // add click able rows
+        transactionTable.setRowFactory( tv -> {
+            TableRow<Transaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+            	Transaction rowData = row.getItem();
+                System.out.println(rowData);
+            });
+            return row ;
+        });
     }
     
     @FXML
     void onSearch(ActionEvent event) {
-    	
+        String searchInput = searchText.getText().trim(); // get search input
+        List<Transaction> searchResults = transactionDAO.search(searchInput); // search transactions by description
+        ObservableList<Transaction> observableResults = FXCollections.observableArrayList(searchResults); // convert results to observable list
+        transactionTable.setItems(observableResults); // update table
+        transactionTable.getSortOrder().clear();// clear sort order to view results correctly
     }
 }
