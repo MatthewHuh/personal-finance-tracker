@@ -46,7 +46,7 @@ public class TransactionTypeDAO implements DAOInt<TransactionType> {
 	}
 
 	@Override
-	public void update(TransactionType obj) {
+	public void update(TransactionType curr, TransactionType updated) {
 		// TODO Auto-generated method stub
 		
 	}

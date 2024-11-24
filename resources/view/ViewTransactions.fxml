@@ -38,7 +38,7 @@
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="28.0" prefWidth="719.0" HBox.hgrow="ALWAYS">
                      <children>
                         <TextField fx:id="searchText" prefHeight="26.0" prefWidth="250.0" promptText="Enter the transaction description" />
-                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearch" text="Button" />
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearch" text="Search" />
                      </children>
                   </HBox>
                </children>

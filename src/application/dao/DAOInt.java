@@ -6,5 +6,5 @@ public interface DAOInt<Type> {
 	public void create(Type obj);
 	
 	// edit existing value in csv file
-	public void update(Type obj);
+	public void update(Type curr, Type update);
 }

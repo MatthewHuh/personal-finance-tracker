@@ -50,7 +50,7 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 	}
 
 	@Override
-	public void update(Transaction obj) {
+	public void update(Transaction curr, Transaction updated) {
 		// TODO Auto-generated method stub
 
 	}

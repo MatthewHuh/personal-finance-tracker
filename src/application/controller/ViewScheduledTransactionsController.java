@@ -90,22 +90,24 @@ public class ViewScheduledTransactionsController {
             TableRow<ScheduledTransaction> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
             	ScheduledTransaction rowData = row.getItem();
-            	EditScheduledTransactionController.initializeScheduledTransaction(rowData);
-            	try {
-    	    		// Load the Home.fxml file
-    	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditScheduledTransaction.fxml"));
-    	    		
-    	    		// Get the current stage
-    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
-    				
-    				// Set the new scene
-    				stage.setScene(new Scene(homeView));
-    				stage.setTitle("Home"); // Optional: Set the window title
-    				stage.show();
-    			} catch (IOException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}
+            	if(rowData != null) {
+	            	EditScheduledTransactionController.initializeScheduledTransaction(rowData);
+	            	try {
+	    	    		// Load the Home.fxml file
+	    	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditScheduledTransaction.fxml"));
+	    	    		
+	    	    		// Get the current stage
+	    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
+	    				
+	    				// Set the new scene
+	    				stage.setScene(new Scene(homeView));
+	    				stage.setTitle("Home"); // Optional: Set the window title
+	    				stage.show();
+	    			} catch (IOException e) {
+	    				// TODO Auto-generated catch block
+	    				e.printStackTrace();
+	    			}
+            	}
             });
             return row ;
         });

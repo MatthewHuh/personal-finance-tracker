@@ -110,7 +110,105 @@ public class EditScheduledTransactionController {
 
     @FXML
     void onSaveAction(ActionEvent event) {
-
+    	if(validate()) {
+    		String name = scheduleName.getText();
+    		Account account = accountDAO.getAccounts().get(accountSelect.getValue());
+    		TransactionType type = transactionTypeDAO.getTransactionTypes().get(typeSelect.getValue());
+    		String frequency = frequencySelect.getValue();
+    		int due = Integer.parseInt(dueDate.getText());
+    		double amount = Double.parseDouble(paymentAmount.getText());
+    		
+    		ScheduledTransaction update = new ScheduledTransaction(name, account, type, frequency, due, amount);
+    		scheduledTransactionDAO.update(scheduledTransaction, update);
+    		
+    		try {
+	    		// Load the Home.fxml file
+	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+	    		
+	    		// Get the current stage
+				Stage stage = (Stage) createAccountPane.getScene().getWindow();
+				
+				// Set the new scene
+				stage.setScene(new Scene(homeView));
+				stage.setTitle("Home"); // Optional: Set the window title
+				stage.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    }
+    
+    private boolean validate() {
+    	// boolean to verify valid inputs
+    	boolean inputValidate = true;
+    	
+    	// check if account name input
+    	if(scheduleName.getText().equals("")) {
+    		nameErrorMsg.setText("Please enter the schedule name");
+    		inputValidate = false;
+    	} 
+    	else if(!scheduledTransaction.getScheduleName().equals(scheduleName.getText()) && 
+    			scheduledTransactionDAO.getScheduledTransactions().get(scheduleName.getText()) != null) {
+    		nameErrorMsg.setText("Schedule name taken. Please enter a unique name");
+    		inputValidate = false;
+    	}
+    	else {
+    		nameErrorMsg.setText("");
+    	}
+    	
+    	if(accountSelect.getValue() == null) {
+    		accountErrorMsg.setText("Please select an account");
+    		inputValidate = false;
+    	}
+    	else {
+    		accountErrorMsg.setText("");
+    	}
+    	
+    	if(typeSelect.getValue() == null) {
+    		transactionTypeErrorMsg.setText("Please select a transaction type");
+    		inputValidate = false;
+    	}
+    	else {
+    		transactionTypeErrorMsg.setText("");
+    	}
+    	
+    	if(frequencySelect.getValue() == null) {
+    		frequencyErrorMsg.setText("Please select the frequency");
+    		inputValidate = false;
+    	}
+    	else {
+    		frequencyErrorMsg.setText("");
+    	}
+    	
+    	if(dueDate.getText().equals("")) {
+    		dueDateErrorMsg.setText("Please enter the due date");
+    		inputValidate = false;
+    	}
+    	else {
+    		dueDateErrorMsg.setText("");
+    		try {
+    			Integer.parseInt(dueDate.getText());
+    		} catch(NumberFormatException e) {
+    			dueDateErrorMsg.setText("Please enter a integer value");
+        		inputValidate = false;
+    		}
+    	}
+    	
+    	if(paymentAmount.getText().equals("")) {
+    		amountErrorMsg.setText("Please enter the payment amount");
+    		inputValidate = false;
+    	}
+    	else {
+    		amountErrorMsg.setText("");
+    		try {
+    			Double.parseDouble(paymentAmount.getText());
+    		} catch(NumberFormatException e) {
+    			amountErrorMsg.setText("Please enter a double value");
+        		inputValidate = false;
+    		}
+    	}
+    	return inputValidate;
     }
 
 }
