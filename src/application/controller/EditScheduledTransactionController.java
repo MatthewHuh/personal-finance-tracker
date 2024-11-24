@@ -75,7 +75,7 @@ public class EditScheduledTransactionController {
     public void initialize() {
     	accounts = accountDAO.getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
-        accountSelect.getSelectionModel().select(scheduledTransaction.getAccount().getName());; // Set default to first item
+        accountSelect.getSelectionModel().select(scheduledTransaction.getAccount().getName()); // Set default to first item
 
         transactionTypes = transactionTypeDAO.getTransactionTypes();
         typeSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
@@ -123,13 +123,13 @@ public class EditScheduledTransactionController {
     		
     		try {
 	    		// Load the Home.fxml file
-	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+	    		Parent scheduledTransationView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewScheduledTransactions.fxml"));
 	    		
 	    		// Get the current stage
 				Stage stage = (Stage) createAccountPane.getScene().getWindow();
 				
 				// Set the new scene
-				stage.setScene(new Scene(homeView));
+				stage.setScene(new Scene(scheduledTransationView));
 				stage.setTitle("Home"); // Optional: Set the window title
 				stage.show();
 			} catch (IOException e) {
