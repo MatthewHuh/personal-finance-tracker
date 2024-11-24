@@ -109,7 +109,7 @@ public class ViewScheduledTransactionsController {
 	    			}
             	}
             });
-            return row ;
+            return row;
         });
     }
     @FXML

@@ -75,7 +75,7 @@ public class EditScheduledTransactionController {
     public void initialize() {
     	accounts = accountDAO.getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
-        accountSelect.getSelectionModel().select(scheduledTransaction.getAccount().getName());; // Set default to first item
+        accountSelect.getSelectionModel().select(scheduledTransaction.getAccount().getName()); // Set default to first item
 
         transactionTypes = transactionTypeDAO.getTransactionTypes();
         typeSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
