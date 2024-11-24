@@ -57,8 +57,15 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 	
 	@Override
 	public List<Transaction> search(String subStr) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Transaction> results = new ArrayList<>();
+
+		for (Transaction transaction : TRANSACTIONS) {
+			if (transaction.getDescription().toLowerCase().contains(subStr.toLowerCase())) {
+				results.add(transaction);
+			}
+		}
+
+		return results;
 	}	
 	
 	private static List<Transaction> load() {
