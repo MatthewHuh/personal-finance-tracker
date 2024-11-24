@@ -46,7 +46,7 @@ public class AccountDAO implements DAOInt<Account>{
 	}
 
 	@Override
-	public void update(Account obj) {
+	public void update(Account curr, Account updated) {
 		// TODO Auto-generated method stub
 		
 	}

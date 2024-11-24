@@ -2,6 +2,7 @@ package application.dao;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,7 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
+
 
 import application.Account;
 import application.ScheduledTransaction;
@@ -49,8 +53,48 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 	}
 
 	@Override
-	public void update(ScheduledTransaction obj) {
+	public void update(ScheduledTransaction curr, ScheduledTransaction updated) {
 		// TODO Auto-generated method stub
+		try {
+			CSVReader reader = new CSVReader(new FileReader(new File(TRANSACTION_FILE)));
+			List<String[]> scheduledTransactions = reader.readAll();
+			
+			for(int i = 0; i < scheduledTransactions.size(); i++) {
+				if(curr.getScheduleName().equals(scheduledTransactions.get(i)[0])) {
+					String[] data = {
+							updated.getScheduleName(),
+							updated.getAccount().getName(),
+							updated.getType().getTransactionType(),
+							updated.getFrequency(),
+							String.valueOf(updated.getDueDate() ),
+							String.valueOf(updated.getAmount() )
+					};
+					scheduledTransactions.set(i, data);
+				}
+			}
+			File file = new File(TRANSACTION_FILE);
+			FileWriter outputfile = new FileWriter(file, false);
+				 CSVWriter writer = new CSVWriter(outputfile, ',',
+						 CSVWriter.NO_QUOTE_CHARACTER,
+						 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+						 CSVWriter.DEFAULT_LINE_END);
+				 writer.writeAll(scheduledTransactions);
+				 
+				 SCHEDULED_TRANSACTIONS.remove(curr.getScheduleName());
+				 SCHEDULED_TRANSACTIONS.put(updated.getScheduleName(), updated);
+				 writer.close();
+				 reader.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CsvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 	

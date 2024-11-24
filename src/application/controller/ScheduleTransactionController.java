@@ -140,7 +140,7 @@ public class ScheduleTransactionController {
     		nameErrorMsg.setText("Please enter the schedule name");
     		inputValidate = false;
     	} 
-    	else if(scheduledTransactionDAO.search(scheduleName.getText()) != null) {
+    	else if(scheduledTransactionDAO.getScheduledTransactions().get(scheduleName.getText()) != null) {
     		nameErrorMsg.setText("Schedule name taken. Please enter a unique name");
     		inputValidate = false;
     	}
