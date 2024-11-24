@@ -61,25 +61,6 @@ public class ViewTransactionsController {
 
 
     private final TransactionDAO transactionDAO = new TransactionDAO();
-
-    @FXML
-    void onBack(ActionEvent event) {
-    	try {
-    		// Load the Home.fxml file
-    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-    		
-    		// Get the current stage
-			Stage stage = (Stage) createAccountPane.getScene().getWindow();
-			
-			// Set the new scene
-			stage.setScene(new Scene(homeView));
-			stage.setTitle("Home"); // Optional: Set the window title
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
     
     @FXML
     public void initialize() {
@@ -125,25 +106,46 @@ public class ViewTransactionsController {
             TableRow<Transaction> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
             	Transaction rowData = row.getItem();
-                EditTransactionController.initializeTransaction(rowData);
-                try {
-    	    		// Load the Home.fxml file
-    	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditTransaction.fxml"));
-    	    		
-    	    		// Get the current stage
-    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
-    				
-    				// Set the new scene
-    				stage.setScene(new Scene(homeView));
-    				stage.setTitle("Home"); // Optional: Set the window title
-    				stage.show();
-    			} catch (IOException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}
+            	if (rowData != null) {
+	                EditTransactionController.initializeTransaction(rowData);
+	                try {
+	    	    		// Load the Home.fxml file
+	    	    		Parent editTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditTransaction.fxml"));
+	    	    		
+	    	    		// Get the current stage
+	    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
+	    				
+	    				// Set the new scene
+	    				stage.setScene(new Scene(editTransactionView));
+	    				stage.setTitle("Home"); // Optional: Set the window title
+	    				stage.show();
+	    			} catch (IOException e) {
+	    				// TODO Auto-generated catch block
+	    				e.printStackTrace();
+	    			}
+            	}
             });
             return row;
         });
+    }
+    
+    @FXML
+    void onBack(ActionEvent event) {
+    	try {
+    		// Load the Home.fxml file
+    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+    		
+    		// Get the current stage
+			Stage stage = (Stage) createAccountPane.getScene().getWindow();
+			
+			// Set the new scene
+			stage.setScene(new Scene(homeView));
+			stage.setTitle("Home"); // Optional: Set the window title
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     @FXML

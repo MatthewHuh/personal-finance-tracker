@@ -94,13 +94,13 @@ public class ViewScheduledTransactionsController {
 	            	EditScheduledTransactionController.initializeScheduledTransaction(rowData);
 	            	try {
 	    	    		// Load the Home.fxml file
-	    	    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditScheduledTransaction.fxml"));
+	    	    		Parent editScheduledTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditScheduledTransaction.fxml"));
 	    	    		
 	    	    		// Get the current stage
 	    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
 	    				
 	    				// Set the new scene
-	    				stage.setScene(new Scene(homeView));
+	    				stage.setScene(new Scene(editScheduledTransactionView));
 	    				stage.setTitle("Home"); // Optional: Set the window title
 	    				stage.show();
 	    			} catch (IOException e) {
@@ -116,13 +116,13 @@ public class ViewScheduledTransactionsController {
     void onBack(ActionEvent event) {
     	try {
     		// Load the Home.fxml file
-    		Parent scheduledTransationView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewScheduledTransactions.fxml"));
+    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
     		
     		// Get the current stage
 			Stage stage = (Stage) createAccountPane.getScene().getWindow();
 			
 			// Set the new scene
-			stage.setScene(new Scene(scheduledTransationView));
+			stage.setScene(new Scene(homeView));
 			stage.setTitle("Home"); // Optional: Set the window title
 			stage.show();
 		} catch (IOException e) {

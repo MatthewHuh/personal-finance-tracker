@@ -1,3 +1,11 @@
 name,account,type,frequency,dueDate,amount
-asdf,Chase VISA Credit,food,Monthly,1,15.025
+Weekly Groceries,Chase VISA Credit,food,Monthly,1,15.25
 Rent,US Bank Savings,rent,Monthly,25,100.0
+mortgage,Chase VISA Credit,loan payment,Monthly,28,4000.0
+credit card,Bank of America Checking,loan payment,Monthly,15,4000.0
+savings fee,Bank of America Checking,paycheck,Monthly,30,30.0
+phone bill,Bank of America Checking,rent,Monthly,15,120.0
+car insurance,Chase VISA Credit,rent,Monthly,15,700.0
+college,Bank of America Checking,tuition,Monthly,2,400.0
+wifi bill,Chase VISA Credit,rent,Monthly,10,300.0
+water bill,Chase VISA Credit,rent,Monthly,10,60.0
