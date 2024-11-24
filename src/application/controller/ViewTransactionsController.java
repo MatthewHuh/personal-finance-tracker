@@ -117,6 +117,16 @@ public class ViewTransactionsController {
         
         // sort by transactionDate descending
         transactionTable.getSortOrder().add(transactionDateCol);
+        
+        // add click able rows
+        transactionTable.setRowFactory( tv -> {
+            TableRow<Transaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+            	Transaction rowData = row.getItem();
+                System.out.println(rowData);
+            });
+            return row ;
+        });
     }
     
     @FXML
