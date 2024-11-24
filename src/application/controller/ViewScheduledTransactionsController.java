@@ -116,13 +116,13 @@ public class ViewScheduledTransactionsController {
     void onBack(ActionEvent event) {
     	try {
     		// Load the Home.fxml file
-    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+    		Parent scheduledTransationView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewScheduledTransactions.fxml"));
     		
     		// Get the current stage
 			Stage stage = (Stage) createAccountPane.getScene().getWindow();
 			
 			// Set the new scene
-			stage.setScene(new Scene(homeView));
+			stage.setScene(new Scene(scheduledTransationView));
 			stage.setTitle("Home"); // Optional: Set the window title
 			stage.show();
 		} catch (IOException e) {
