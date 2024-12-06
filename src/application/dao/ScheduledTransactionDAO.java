@@ -1,5 +1,6 @@
 package application.dao;
 
+import java.time.LocalDate;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -147,6 +148,18 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 		}
 
 		return scheduledTransactions;
+	}
+	public List<ScheduledTransaction> getTransactionsDueToday() {
+		List<ScheduledTransaction> dueToday = new ArrayList<>();
+		int currentDay = LocalDate.now().getDayOfMonth();
+
+		for (ScheduledTransaction transaction : SCHEDULED_TRANSACTIONS.values()) {
+			if (transaction.getDueDate() == currentDay) {
+				dueToday.add(transaction);
+			}
+		}
+
+		return dueToday;
 	}
 
 	public Map<String, ScheduledTransaction> getScheduledTransactions() {
