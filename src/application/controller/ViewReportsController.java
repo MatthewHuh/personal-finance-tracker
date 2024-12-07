@@ -113,6 +113,9 @@ public class ViewReportsController {
                 // Get the transactions based on selected account
                 ObservableList<Transaction> filteredTransactions = FXCollections.observableArrayList(transactionDAO.getTransactionsByAccount(newValue));
 
+                // Sort the transactions by transaction date in descending order
+                filteredTransactions.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));
+
                 // Set the transactions to the table
                 transactionTable.setItems(filteredTransactions);
 
@@ -132,6 +135,9 @@ public class ViewReportsController {
 
                 // Get the transactions based on selected transaction type
                 ObservableList<Transaction> filteredTransactions = FXCollections.observableArrayList(transactionDAO.getTransactionsByType(newValue));
+
+                // Sort the transactions by transaction date in descending order
+                filteredTransactions.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));
 
                 // Set the transactions to the table
                 transactionTable.setItems(filteredTransactions);
