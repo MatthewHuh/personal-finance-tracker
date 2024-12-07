@@ -18,10 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -63,6 +60,9 @@ public class ViewReportsController {
     private AccountDAO accountDAO = new AccountDAO();
     private TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO();
     private TransactionDAO transactionDAO = new TransactionDAO();
+    private Account selectedAccount;
+    private TransactionType selectedTransactionType;
+
     @FXML
     public void initialize() {
         // Add options into Account ChoiceBox
@@ -101,9 +101,12 @@ public class ViewReportsController {
             return new SimpleStringProperty("");
         });
 
-        // Wait for selection in the accountChoiceBox
+        // Wait for selection in the account choice box
         accountSelect.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                // Store the selected account
+                selectedAccount = newValue;
+
                 // Change dynamic column text
                 dynamicColumn.setText("Transaction Type");
 
@@ -124,9 +127,11 @@ public class ViewReportsController {
             }
         });
 
-        // Wait for selection in the typeChoiceBox
+        // Wait for selection in the transaction type choice box
         typeSelect.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                // Store selected transaction type
+                selectedTransactionType = newValue;
                 // Change dynamic column text
                 dynamicColumn.setText("Account Name");
 
@@ -146,8 +151,40 @@ public class ViewReportsController {
                 transactionTable.refresh();
             }
         });
-    }
 
+        // Add click-able rows to open the detailed view
+        transactionTable.setRowFactory( tv -> {
+            TableRow<Transaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                Transaction rowData = row.getItem();
+                if (rowData != null) {
+                    openTransactionDetailPage(rowData);
+                }
+            });
+            return row;
+        });
+    }
+    // Open the Transaction Detail page which is read only
+    private void openTransactionDetailPage(Transaction transaction) {
+        try {
+            Account selectedAccount = accountSelect.getSelectionModel().getSelectedItem();
+            TransactionType selectedTransactionType = typeSelect.getSelectionModel().getSelectedItem();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/TransactionDetail.fxml"));
+            Parent detailView = loader.load();
+
+            TransactionDetailController controller = loader.getController();
+            controller.initialize(transaction, selectedAccount, selectedTransactionType);
+
+            Stage stage = (Stage) transactionTable.getScene().getWindow();
+
+            stage.setScene(new Scene(detailView));
+            stage.setTitle("Transaction Details");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     void onBack(ActionEvent event) {
     	try {
@@ -166,5 +203,32 @@ public class ViewReportsController {
 			e.printStackTrace();
 		}
     }
+    // Method to load transactions based on previous choice box selection
+    private void loadTransactions() {
+        ObservableList<Transaction> transactions = FXCollections.observableArrayList();
 
+        if (selectedAccount != null) {
+            transactions.addAll(transactionDAO.getTransactionsByAccount(selectedAccount));
+        } else if (selectedTransactionType != null) {
+            transactions.addAll(transactionDAO.getTransactionsByType(selectedTransactionType));
+        }
+
+        transactions.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));
+
+        transactionTable.setItems(transactions);
+
+        transactionTable.refresh();
+    }
+    // Method to update selected account and transaction type from TransactionDetailController
+    public void setSelectedAccount(Account account) {
+        this.selectedAccount = account;
+        accountSelect.getSelectionModel().select(account);  // Update the choice box selection
+        loadTransactions();  // Load the transactions based on the selected account
+    }
+
+    public void setSelectedTransactionType(TransactionType transactionType) {
+        this.selectedTransactionType = transactionType;
+        typeSelect.getSelectionModel().select(transactionType);  // Update the choice box selection
+        loadTransactions();  // Load the transactions based on the selected transaction type
+    }
 }
