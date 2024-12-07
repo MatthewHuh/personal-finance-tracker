@@ -19,13 +19,14 @@ import javafx.stage.Stage;
 
 import application.Transaction;
 import application.Account;
+import application.Format;
 import application.TransactionType;
 import application.dao.TransactionDAO;
 import application.dao.AccountDAO;
 import application.dao.TransactionTypeDAO;
 
 
-public class CreateTransactionController {
+public class TransactionController {
 
     @FXML
     private Label AccountErrorMsg;
@@ -66,15 +67,40 @@ public class CreateTransactionController {
     @FXML
     private Label transactionTypeErrorMsg;
     
+    @FXML
+    private Label pageTitle;
+    
+    private static Transaction transaction;
+    private static Format format;
     private final TransactionDAO transactionDAO = new TransactionDAO();
     private final AccountDAO accountDAO = new AccountDAO();
     private final TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO();
     private Map<String, Account> accounts;
     private Map<String, TransactionType> transactionTypes;
 
+    public static void initialize(Format form) {
+    	transaction = null;
+    	format = form;
+    }
+    
+    public static void initialize(Transaction theTransaction, Format theFormat) {
+    	transaction = theTransaction;
+    	format = theFormat;
+    }
+    
     public void initialize() {
-        // Populate account and transaction type ChoiceBoxes
-        accounts = accountDAO.getAccounts();
+    	if(format.equals(Format.CREATE)) {
+        	initializeCreate();
+    	}
+    	else if(format.equals(Format.EDIT)) {
+    		initializeEdit();
+    	}
+    	
+    }
+    
+    private void initializeCreate() {
+    	// Populate account and transaction type ChoiceBoxes
+    	accounts = accountDAO.getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().selectFirst(); // Set default to first item
 
@@ -84,25 +110,67 @@ public class CreateTransactionController {
 
         // Set default date to today
         datePicker.setValue(LocalDate.now());
+        
+        pageTitle.setText("Enter Transaction");
     }
+    
+    private void initializeEdit() {
+    	accounts = accountDAO.getAccounts();
+        accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
+        accountSelect.getSelectionModel().select(transaction.getAccount().getName()); // Set default to current account name
+
+        transactionTypes = transactionTypeDAO.getTransactionTypes();
+        transactionSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
+        transactionSelect.getSelectionModel().select(transaction.getTransactionType().getTransactionType()); // Set default to current transaction type
+        
+        datePicker.setValue(transaction.getTransactionDate());
+        
+        transactionDescription.setText(transaction.getDescription());
+        
+        paymentAmount.setText(Double.toString(transaction.getPaymentAmount()));
+        depositAmount.setText(Double.toString(transaction.getDepositAmount()));
+        
+        pageTitle.setText("Edit Transaction");
+    } 
+
 
     @FXML
     void onCancelAction(ActionEvent event) {
-    	try {
-    		// Load the Home.fxml file
-    		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-    		
-    		// Get the current stage
-			Stage stage = (Stage) createAccountPane.getScene().getWindow();
-			
-			// Set the new scene
-			stage.setScene(new Scene(homeView));
-			stage.setTitle("Home"); // Optional: Set the window title
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	if(format.equals(Format.CREATE)) {
+    		try {
+        		// Load the Home.fxml file
+        		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+        		
+        		// Get the current stage
+    			Stage stage = (Stage) createAccountPane.getScene().getWindow();
+    			
+    			// Set the new scene
+    			stage.setScene(new Scene(homeView));
+    			stage.setTitle("Home"); // Optional: Set the window title
+    			stage.show();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	else if(format.equals(Format.EDIT)) {
+    		try {
+        		// Load the Home.fxml file
+        		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewTransactions.fxml"));
+        		
+        		// Get the current stage
+    			Stage stage = (Stage) createAccountPane.getScene().getWindow();
+    			
+    			// Set the new scene
+    			stage.setScene(new Scene(homeView));
+    			stage.setTitle("Home"); // Optional: Set the window title
+    			stage.show();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	
     }
 
     @FXML
@@ -122,26 +190,53 @@ public class CreateTransactionController {
             String description = transactionDescription.getText();
             double payment = paymentAmount.getText().isEmpty() ? 0 : Double.parseDouble(paymentAmount.getText());
             double deposit = depositAmount.getText().isEmpty() ? 0 : Double.parseDouble(depositAmount.getText());
+            
+            Transaction newTransaction = new Transaction(selectedAccount, selectedTransactionType, transactionDate, description, payment, deposit);
+            
+            if(format.equals(Format.CREATE)) {
+                transactionDAO.create(newTransaction);
+        	}
+        	else if(format.equals(Format.EDIT)) {
+                transactionDAO.update(transaction, newTransaction);
+        	}
+            
 
-            Transaction transaction = new Transaction(selectedAccount, selectedTransactionType, transactionDate, description, payment, deposit);
-            transactionDAO.create(transaction);
-
-            // Close window or navigate to another page if needed
-            try {
-        		// Load the Home.fxml file
-        		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
-        		
-        		// Get the current stage
-    			Stage stage = (Stage) createAccountPane.getScene().getWindow();
-    			
-    			// Set the new scene
-    			stage.setScene(new Scene(homeView));
-    			stage.setTitle("Home"); // Optional: Set the window title
-    			stage.show();
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+            // Close window or navigate to another page
+            if(format.equals(Format.CREATE)) {
+            	try {
+            		// Load the Home.fxml file
+            		Parent homeView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Home.fxml"));
+            		
+            		// Get the current stage
+        			Stage stage = (Stage) createAccountPane.getScene().getWindow();
+        			
+        			// Set the new scene
+        			stage.setScene(new Scene(homeView));
+        			stage.setTitle("Home"); // Optional: Set the window title
+        			stage.show();
+        		} catch (IOException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        	}
+        	else if(format.equals(Format.EDIT)) {
+        		try {
+            		// Load the Home.fxml file
+            		Parent transactionsView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewTransactions.fxml"));
+            		
+            		// Get the current stage
+        			Stage stage = (Stage) createAccountPane.getScene().getWindow();
+        			
+        			// Set the new scene
+        			stage.setScene(new Scene(transactionsView));
+        			stage.setTitle("View Transactions"); // Optional: Set the window title
+        			stage.show();
+        		} catch (IOException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        	}
+            
         }	
     }
     

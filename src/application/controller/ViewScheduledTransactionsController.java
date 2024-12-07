@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import application.Format;
 import application.ScheduledTransaction;
 import application.Transaction;
 import application.dao.ScheduledTransactionDAO;
@@ -91,17 +92,17 @@ public class ViewScheduledTransactionsController {
             row.setOnMouseClicked(event -> {
             	ScheduledTransaction rowData = row.getItem();
             	if(rowData != null) {
-	            	EditScheduledTransactionController.initializeScheduledTransaction(rowData);
+	            	ScheduleTransactionController.initialize(rowData, Format.EDIT);
 	            	try {
 	    	    		// Load the Home.fxml file
-	    	    		Parent editScheduledTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditScheduledTransaction.fxml"));
+	    	    		Parent editScheduledTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ScheduleTransaction.fxml"));
 	    	    		
 	    	    		// Get the current stage
 	    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
 	    				
 	    				// Set the new scene
 	    				stage.setScene(new Scene(editScheduledTransactionView));
-	    				stage.setTitle("Home"); // Optional: Set the window title
+	    				stage.setTitle("Edit Scheduled Transaction"); // Optional: Set the window title
 	    				stage.show();
 	    			} catch (IOException e) {
 	    				// TODO Auto-generated catch block

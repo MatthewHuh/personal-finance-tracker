@@ -2,8 +2,9 @@ package application.controller;
 
 import java.io.IOException;
 
-import application.ScheduledTransaction;
+import application.Format;
 import application.Transaction;
+
 import application.dao.TransactionDAO;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -107,17 +108,17 @@ public class ViewTransactionsController {
             row.setOnMouseClicked(event -> {
             	Transaction rowData = row.getItem();
             	if (rowData != null) {
-	                EditTransactionController.initializeTransaction(rowData);
+	                TransactionController.initialize(rowData, Format.EDIT);
 	                try {
 	    	    		// Load the Home.fxml file
-	    	    		Parent editTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/EditTransaction.fxml"));
+	    	    		Parent editTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Transaction.fxml"));
 	    	    		
 	    	    		// Get the current stage
 	    				Stage stage = (Stage) createAccountPane.getScene().getWindow();
 	    				
 	    				// Set the new scene
 	    				stage.setScene(new Scene(editTransactionView));
-	    				stage.setTitle("Home"); // Optional: Set the window title
+	    				stage.setTitle("Edit Transaction"); // Optional: Set the window title
 	    				stage.show();
 	    			} catch (IOException e) {
 	    				// TODO Auto-generated catch block
