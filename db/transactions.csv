@@ -1,11 +1,12 @@
 account,type,date,description,payAmount,depAmount
 US Bank Savings,paycheck,2024-10-31,Payday,0.0,1000.0
-Bank of America Checking,loan payment,2024-11-23,car payment,700.0,60.0
+US Bank Savings,rent,2024-11-23,car payment,700.0,60.0
 Chase VISA Credit,food,2024-11-21,grocery store purchase,75.5,0.0
-Bank of America Checking,rent,2024-11-23,gym membership,25.0,0.0
-Bank of America Checking,rent,2024-11-23,netflix,12.99,0.0
+Bank of America Checking,loan payment,2024-11-23,gym membership,25.0,0.0
+Bank of America Checking,loan payment,2024-11-23,netflix,12.99,0.0
 Chase VISA Credit,food,2024-11-23,coffee,9.0,0.0
 Bank of America Checking,paycheck,2024-11-23,refunded purchase,0.0,45.0
 US Bank Savings,rent,2024-11-06,utility,120.0,0.0
 Bank of America Checking,paycheck,2024-11-23,paycheck,0.0,600.0
 US Bank Savings,paycheck,2024-11-12,paycheck,0.0,1000.0
+US Bank Savings,loan payment,2024-12-06,make,1233.0,0.0

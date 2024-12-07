@@ -1,23 +1,24 @@
 package application.controller;
 
 
-import application.Account;
 import java.time.LocalDate;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import java.util.Map;
+
+import application.Account;
+import application.Format;
+import application.dao.AccountDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import application.dao.AccountDAO;
-
-import java.util.Map;
+import javafx.stage.Stage;
 
 public class HomeController {
 
@@ -112,8 +113,9 @@ public class HomeController {
     void onEnterTransaction(ActionEvent event) {
     	try {
             // Load the CreateTransaction.fxml file
-            Parent createTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/CreateTransaction.fxml"));
-
+    		TransactionController.initialize(Format.CREATE);
+            Parent createTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/Transaction.fxml"));
+            
             // Get the current stage
             Stage stage = (Stage) enterTransactionButton.getScene().getWindow();
 
@@ -130,6 +132,7 @@ public class HomeController {
     void onScheduleTransaction(ActionEvent event) {
     	try {
             // Load the CreateTransaction.fxml file
+    		ScheduleTransactionController.initialize(Format.CREATE);
             Parent scheduleTransactionView = FXMLLoader.load(getClass().getClassLoader().getResource("view/ScheduleTransaction.fxml"));
 
             // Get the current stage
@@ -156,7 +159,7 @@ public class HomeController {
 
             // Set the new scene
             stage.setScene(new Scene(viewTransactionView));
-            stage.setTitle("View Transaction"); // Set the window title
+            stage.setTitle("View Transactions"); // Set the window title
             stage.show();
         } catch (Exception e) {
             e.printStackTrace(); // Print stack trace for any errors
@@ -174,7 +177,7 @@ public class HomeController {
 
             // Set the new scene
             stage.setScene(new Scene(viewScheduledTransactionView));
-            stage.setTitle("View Scheduled Transaction"); // Set the window title
+            stage.setTitle("View Scheduled Transactions"); // Set the window title
             stage.show();
         } catch (Exception e) {
             e.printStackTrace(); // Print stack trace for any errors
@@ -183,7 +186,20 @@ public class HomeController {
 
     @FXML
     void onViewReports(ActionEvent event) {
+    	try {
+            // Load the CreateTransaction.fxml file
+            Parent viewReports = FXMLLoader.load(getClass().getClassLoader().getResource("view/ViewReports.fxml"));
 
+            // Get the current stage
+            Stage stage = (Stage) viewReportsButton.getScene().getWindow();
+
+            // Set the new scene
+            stage.setScene(new Scene(viewReports));
+            stage.setTitle("View Reports"); // Set the window title
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace for any errors
+        }
     }
 
 }
