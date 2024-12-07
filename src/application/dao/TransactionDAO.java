@@ -147,6 +147,28 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 		return transactions;
 	}
 
+	// Method to get transactions by Account
+	public List<Transaction> getTransactionsByAccount(Account account) {
+		List<Transaction> accountTransactions = new ArrayList<>();
+		for (Transaction transaction : TRANSACTIONS) {
+			if (transaction.getAccount().equals(account)) {
+				accountTransactions.add(transaction);
+			}
+		}
+		return accountTransactions;
+	}
+
+	// Method to get transactions by TransactionType
+	public List<Transaction> getTransactionsByType(TransactionType transactionType) {
+		List<Transaction> typeTransactions = new ArrayList<>();
+		for (Transaction transaction : TRANSACTIONS) {
+			if (transaction.getTransactionType().equals(transactionType)) {
+				typeTransactions.add(transaction);
+			}
+		}
+		return typeTransactions;
+	}
+
 	public List<Transaction> getTransactions() {
 		return TRANSACTIONS;
 	}

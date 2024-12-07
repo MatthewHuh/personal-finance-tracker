@@ -72,7 +72,7 @@ public class ViewTransactionsController {
 	        new SimpleStringProperty(cellData.getValue().getTransactionType().getTransactionType()));
 	    transactionDateCol.setCellValueFactory(cellData -> 
 	        new SimpleStringProperty(cellData.getValue().getTransactionDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
-	    frequencyCol.setCellValueFactory(cellData -> 
+	    descriptionCol.setCellValueFactory(cellData ->
 	        new SimpleStringProperty(cellData.getValue().getDescription()));
 	    paymentDepositCol.setCellValueFactory(cellData -> 
 	        new SimpleStringProperty(cellData.getValue().getPaymentAmount() > 0 ? "Payment" : "Deposit"));
