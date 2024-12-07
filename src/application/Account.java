@@ -38,4 +38,10 @@ public class Account {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+
+	// Override toString to display only the account name
+	@Override
+	public String toString() {
+		return name;
+	}
 }
