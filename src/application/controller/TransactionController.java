@@ -23,6 +23,7 @@ import application.Format;
 import application.TransactionType;
 import application.dao.TransactionDAO;
 import application.dao.AccountDAO;
+import application.dao.DAOInt;
 import application.dao.TransactionTypeDAO;
 
 
@@ -72,11 +73,10 @@ public class TransactionController {
     
     private static Transaction transaction;
     private static Format format;
-    private final TransactionDAO transactionDAO = new TransactionDAO();
-    private final AccountDAO accountDAO = new AccountDAO();
-    private final TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO();
-    private Map<String, Account> accounts;
-    private Map<String, TransactionType> transactionTypes;
+    private final DAOInt<Transaction> transactionDAO = new TransactionDAO();
+    private final DAOInt<Account> accountDAO = new AccountDAO();
+    private final DAOInt<TransactionType> transactionTypeDAO = new TransactionTypeDAO();
+
 
     public static void initialize(Format form) {
     	transaction = null;
@@ -100,11 +100,13 @@ public class TransactionController {
     
     private void initializeCreate() {
     	// Populate account and transaction type ChoiceBoxes
-    	accounts = accountDAO.getAccounts();
+    	Map<String, Account> accounts;
+    	accounts = ((AccountDAO) accountDAO).getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().selectFirst(); // Set default to first item
 
-        transactionTypes = transactionTypeDAO.getTransactionTypes();
+        Map<String, TransactionType> transactionTypes;
+        transactionTypes = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes();
         transactionSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
         transactionSelect.getSelectionModel().selectFirst(); // Set default to first item
 
@@ -115,11 +117,13 @@ public class TransactionController {
     }
     
     private void initializeEdit() {
-    	accounts = accountDAO.getAccounts();
+    	Map<String, Account> accounts;
+    	accounts = ((AccountDAO) accountDAO).getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().select(transaction.getAccount().getName()); // Set default to current account name
 
-        transactionTypes = transactionTypeDAO.getTransactionTypes();
+        Map<String, TransactionType> transactionTypes;
+        transactionTypes = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes();
         transactionSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
         transactionSelect.getSelectionModel().select(transaction.getTransactionType().getTransactionType()); // Set default to current transaction type
         
@@ -176,11 +180,14 @@ public class TransactionController {
     @FXML
     void onSubmitAction(ActionEvent event) {
     	if (validateFields()) {
+    		Map<String, Account> accounts = ((AccountDAO) accountDAO).getAccounts();
             Account selectedAccount = accounts.values().stream()
                 .filter(a -> a.getName().equals(accountSelect.getValue()))
                 .findFirst()
                 .orElse(null);
 
+            Map<String, TransactionType> transactionTypes;
+            transactionTypes = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes();
             TransactionType selectedTransactionType = transactionTypes.values().stream()
                 .filter(t -> t.getTransactionType().equals(transactionSelect.getValue()))
                 .findFirst()

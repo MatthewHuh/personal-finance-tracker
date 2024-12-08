@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ViewTransactionsController">
+<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ViewTransactionsController">
    <bottom>
       <HBox alignment="CENTER" prefWidth="416.0" BorderPane.alignment="CENTER">
          <children>
@@ -48,7 +48,7 @@
                   <TableColumn fx:id="accountCol" prefWidth="161.5999755859375" text="Account" />
                   <TableColumn fx:id="transactionTypeCol" prefWidth="105.59991455078125" text="Transaction Type" />
                   <TableColumn fx:id="transactionDateCol" prefWidth="114.40008544921875" sortType="DESCENDING" text="Transaction Date" />
-                  <TableColumn fx:id="frequencyCol" prefWidth="186.39996337890625" text="Transaction Description" />
+                  <TableColumn fx:id="descriptionCol" prefWidth="186.39996337890625" text="Transaction Description" />
                   <TableColumn fx:id="paymentDepositCol" prefWidth="115.20001220703125" text="Payment / Deposit" />
                   <TableColumn fx:id="amountCol" prefWidth="115.199951171875" text="Amount" />
                </columns>

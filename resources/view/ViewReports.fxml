@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ViewReportsController">
+<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ViewReportsController">
    <bottom>
       <HBox alignment="CENTER" prefWidth="416.0" BorderPane.alignment="CENTER">
          <children>
@@ -55,11 +55,11 @@
             </HBox>
             <TableView fx:id="transactionTable" prefHeight="442.0" prefWidth="500.0">
                <columns>
-                  <TableColumn fx:id="col1" prefWidth="168.0" text="Col1" />
-                  <TableColumn fx:id="col2" prefWidth="140.79998779296875" text="Col2" />
-                  <TableColumn fx:id="col3" prefWidth="216.79998779296875" text="Col3" />
-                  <TableColumn fx:id="col4" prefWidth="130.0" text="Col4" />
-                  <TableColumn fx:id="col5" prefWidth="130.0" text="Col5" />
+                  <TableColumn fx:id="dynamicColumn" prefWidth="168.0" text="Account/Transaction Type" />
+                  <TableColumn fx:id="transactionDateCol" prefWidth="114.40008544921875" sortType="DESCENDING" text="Transaction Date" />
+                  <TableColumn fx:id="descriptionCol" prefWidth="186.39996337890625" text="Transaction Description" />
+                  <TableColumn fx:id="paymentDepositCol" prefWidth="115.20001220703125" text="Payment / Deposit" />
+                  <TableColumn fx:id="amountCol" prefWidth="115.199951171875" text="Amount" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
