@@ -2,6 +2,11 @@ package application;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a financial transaction associated with an {@link Account}.
+ * A transaction has a specified transaction type, date, and description, 
+ * as well as amounts that indicate either a payment or a deposit.
+ */
 public class Transaction {
 
 	private Account account;
@@ -11,6 +16,16 @@ public class Transaction {
 	private double paymentAmount;
 	private double depositAmount;
 	
+	/**
+     * Constructs a new {@code Transaction} with the specified details.
+     *
+     * @param account         The {@link Account} associated with this transaction.
+     * @param transactionType The {@link TransactionType} describing the nature of this transaction.
+     * @param transactionDate The date on which the transaction occurred.
+     * @param description     A brief description of the transaction.
+     * @param paymentAmount   The payment amount if this transaction involves outgoing funds.
+     * @param depositAmount   The deposit amount if this transaction involves incoming funds.
+     */
 	public Transaction(Account account, TransactionType transactionType, LocalDate transactionDate, 
 						String description, double paymentAmount, double depositAmount) {
 		this.account = account;

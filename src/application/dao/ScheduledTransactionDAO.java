@@ -21,10 +21,24 @@ import application.Account;
 import application.ScheduledTransaction;
 import application.TransactionType;
 
+/**
+ * A Data Access Object (DAO) implementation for managing {@link ScheduledTransaction} objects.
+ * This DAO uses a CSV file as its data store. The file's path is specified by {@code TRANSACTION_FILE}.
+ * 
+ * <p>In addition to basic create and update operations defined by {@link DAOInt}, this class 
+ * also implements {@link SearchableDAO} to allow searching scheduled transactions by a substring 
+ * of their schedule name, and provides a method to retrieve transactions due on the current day.</p>
+ */
 public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, SearchableDAO<ScheduledTransaction> {
 	private static final String TRANSACTION_FILE = "db/scheduledTransactions.csv"; // Path to scheduledTransactions.csv
 	private static final Map<String, ScheduledTransaction> SCHEDULED_TRANSACTIONS = load();
 	
+	/**
+     * Creates a new {@link ScheduledTransaction} record and appends it to the CSV file.
+     * The newly created scheduled transaction is also added to the in-memory cache.
+     *
+     * @param obj The {@code ScheduledTransaction} object to be created.
+     */
 	@Override
 	public void create(ScheduledTransaction obj) {
 		File file = new File(TRANSACTION_FILE);
@@ -53,6 +67,15 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 		}
 	}
 
+	/**
+     * Updates an existing {@link ScheduledTransaction} record with new values.
+     * This method reads all scheduled transactions from the CSV file, finds the record 
+     * matching {@code curr}, replaces it with {@code updated}, and then writes all 
+     * records back to the file.
+     *
+     * @param curr    The current {@code ScheduledTransaction} record as stored.
+     * @param updated The {@code ScheduledTransaction} object with updated values.
+     */
 	@Override
 	public void update(ScheduledTransaction curr, ScheduledTransaction updated) {
 		// TODO Auto-generated method stub
@@ -99,6 +122,12 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 		
 	}
 	
+	/**
+     * Searches for {@link ScheduledTransaction} objects whose schedule name contains the given substring.
+     *
+     * @param subStr The substring to search for in the schedule names.
+     * @return A list of {@code ScheduledTransaction} objects that contain the substring in their schedule name.
+     */
 	@Override
 	public List<ScheduledTransaction> search(String subStr) {
 		List<ScheduledTransaction> results = new ArrayList<>();
@@ -112,6 +141,12 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 		return results;
 	}
 
+	/**
+     * Loads all {@link ScheduledTransaction} records from the CSV file into a map, keyed by schedule name.
+     * This static method is called once at class initialization and populates the in-memory cache.
+     *
+     * @return A map of schedule names to their corresponding {@link ScheduledTransaction} objects.
+     */
 	private static HashMap<String, ScheduledTransaction> load() {
 		HashMap<String, ScheduledTransaction> scheduledTransactions = new HashMap<>();
 		File file = new File(TRANSACTION_FILE);
@@ -149,6 +184,13 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 
 		return scheduledTransactions;
 	}
+	
+	/**
+     * Retrieves a list of {@link ScheduledTransaction} objects that are due today.
+     * A scheduled transaction is considered due today if its due date matches today's day of the month.
+     *
+     * @return A list of scheduled transactions due today.
+     */
 	public List<ScheduledTransaction> getTransactionsDueToday() {
 		List<ScheduledTransaction> dueToday = new ArrayList<>();
 		int currentDay = LocalDate.now().getDayOfMonth();
@@ -162,6 +204,12 @@ public class ScheduledTransactionDAO implements DAOInt<ScheduledTransaction>, Se
 		return dueToday;
 	}
 
+	 /**
+     * Retrieves all loaded {@link ScheduledTransaction} objects.
+     * The returned map is a cached representation of the scheduled transactions loaded from the CSV file.
+     *
+     * @return A map of schedule names to their corresponding {@link ScheduledTransaction} objects.
+     */
 	public Map<String, ScheduledTransaction> getScheduledTransactions() {
 		return SCHEDULED_TRANSACTIONS;
 	}

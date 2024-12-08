@@ -14,6 +14,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller class for the Transaction Detail view. This class displays detailed information
+ * about a single transaction, including the associated account, transaction type, date, description,
+ * and the amount (either payment or deposit). The user can navigate back to a report view that
+ * displays filtered results based on the currently selected account and transaction type.
+ */
 public class TransactionDetailController {
 
     @FXML private Label accountLabel;
@@ -27,6 +33,14 @@ public class TransactionDetailController {
     private Account selectedAccount;
     private TransactionType selectedTransactionType;
 
+    /**
+     * Initializes the transaction details on the view. 
+     * This method should be called after loading the FXML and before displaying the view.
+     *
+     * @param transaction The transaction whose details are to be displayed.
+     * @param account The account associated with the transaction.
+     * @param transactionType The type of the transaction.
+     */
     public void initialize(Transaction transaction, Account account, TransactionType transactionType) {
         // Initialize the labels with the transaction details
         accountLabel.setText(transaction.getAccount().getName());
@@ -43,6 +57,13 @@ public class TransactionDetailController {
         this.selectedTransactionType = transactionType;
     }
 
+    /**
+     * Handles the action triggered by the "Back" button.
+     * Navigates back to the reports view (ViewReports.fxml), passing along the currently selected
+     * account and transaction type so that the report can be re-displayed with the same filters.
+     *
+     * @param event The action event triggered by clicking the "Back" button.
+     */
     @FXML
     void onBack(ActionEvent event) {
         try {

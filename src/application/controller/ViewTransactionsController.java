@@ -21,7 +21,12 @@ import javafx.stage.Stage;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
+/**
+ * Controller class for viewing and managing existing transactions.
+ * This class displays transactions in a table where each row can be clicked to
+ * edit the corresponding transaction. Users can also search transactions by their description.
+ * Clicking the "Back" button returns to the Home view.
+ */
 public class ViewTransactionsController {
 	
 	@FXML
@@ -63,6 +68,10 @@ public class ViewTransactionsController {
 
     private final DAOInt<Transaction> transactionDAO = new TransactionDAO();
     
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Sets up the table columns, loads transactions, applies default sorting, and enables row-click editing.
+     */
     @FXML
     public void initialize() {
         // Set up table columns
@@ -130,6 +139,12 @@ public class ViewTransactionsController {
         });
     }
     
+    /**
+     * Handles the action triggered by the "Back" button.
+     * Navigates back to the Home view.
+     *
+     * @param event The action event triggered by the "Back" button.
+     */
     @FXML
     void onBack(ActionEvent event) {
     	try {
@@ -149,6 +164,13 @@ public class ViewTransactionsController {
 		}
     }
     
+    /**
+     * Handles the action triggered by the "Search" button.
+     * Searches the transactions by the description entered in the search field,
+     * updates the table to show only matching results.
+     *
+     * @param event The action event triggered by the "Search" button.
+     */
     @FXML
     void onSearch(ActionEvent event) {
         String searchInput = searchText.getText().trim(); // get search input

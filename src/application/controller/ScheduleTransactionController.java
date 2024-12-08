@@ -22,6 +22,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for scheduling transactions.
+ * This class allows the user to create or edit scheduled transactions,
+ * including specifying the account, transaction type, frequency, due date, and amount.
+ * The controller supports two modes:
+ * <ul>
+ *   <li>{@link Format#CREATE}: creating a new scheduled transaction</li>
+ *   <li>{@link Format#EDIT}: editing an existing scheduled transaction</li>
+ * </ul>
+ */
 public class ScheduleTransactionController {
 
     @FXML
@@ -72,16 +82,34 @@ public class ScheduleTransactionController {
     private final DAOInt<Account> accountDAO = new AccountDAO();
     private final DAOInt<TransactionType> transactionTypeDAO = new TransactionTypeDAO();
     
+    /**
+     * Initializes the static properties of this controller before the scene is displayed.
+     * Sets the page to "CREATE" mode and clears any previously held {@link ScheduledTransaction}.
+     *
+     * @param theFormat The format to set, usually {@link Format#CREATE}.
+     */
     public static void initialize(Format theFormat) {
     	scheduledTransaction = null;
     	format = theFormat;
     }
     
+    /**
+     * Initializes the static properties of this controller with an existing {@link ScheduledTransaction}.
+     * Sets the controller to "EDIT" mode for the given scheduled transaction.
+     *
+     * @param theSchedule The existing scheduled transaction to edit.
+     * @param theFormat   The format to set, usually {@link Format#EDIT}.
+     */
     public static void initialize(ScheduledTransaction theSchedule, Format theFormat) {
 		scheduledTransaction = theSchedule;
 		format = theFormat;
     }
     
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Depending on the {@link Format} (CREATE or EDIT), this method initializes the fields
+     * and choice boxes with appropriate default values and data from existing transactions.
+     */
     public void initialize() {
     	if(format.equals(Format.CREATE)) {
     		initializeCreate();
@@ -91,13 +119,18 @@ public class ScheduleTransactionController {
     	}
     }
     
+    /**
+     * Initializes the controller for the CREATE mode.
+     * Populates the account, transaction type, and frequency choice boxes with available values.
+     * Sets default selections and updates the page title.
+     */
     private void initializeCreate() {
     	// Populate account and transaction type ChoiceBoxes
     	Map<String, Account> accounts;
 		accounts = ((AccountDAO) accountDAO).getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().selectFirst(); // Set default to first item
-
+        
         Map<String, TransactionType> transactionTypes;
         transactionTypes = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes();
         typeSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
@@ -109,7 +142,14 @@ public class ScheduleTransactionController {
         pageTitle.setText("Schedule Transaction");
     }
     
+    /**
+     * Initializes the controller for the EDIT mode.
+     * Populates the account, transaction type, and frequency choice boxes and sets their values
+     * to those of the {@link #scheduledTransaction} being edited.
+     * Also pre-fills the schedule name, due date, and payment amount fields.
+     */
     private void initializeEdit() {
+    	// Populate account and transaction type ChoiceBoxes
     	Map<String, Account> accounts;
     	accounts = ((AccountDAO) accountDAO).getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
@@ -130,7 +170,12 @@ public class ScheduleTransactionController {
     	pageTitle.setText("Edit Scheduled Transaction");
     }
     
+    /**
+     * Navigates to the appropriate home view based on the current {@link Format}.
+     * If CREATE mode, navigates to Home.fxml. If EDIT mode, navigates to ViewScheduledTransactions.fxml.
+     */
     private void exit() {
+    	// check which page to navigate to based on current page format
     	if(format.equals(Format.CREATE)) {
     		try {
         		// Load the Home.fxml file
@@ -168,14 +213,29 @@ public class ScheduleTransactionController {
     	
     }
 
+    /**
+     * Handles the action triggered by the "Cancel" button.
+     * Navigates back to the appropriate home or view page without saving changes.
+     *
+     * @param event The action event triggered by the "Cancel" button.
+     */
     @FXML
     void onCancelAction(ActionEvent event) {
     	exit();
     }
 
+    /**
+     * Handles the action triggered by the "Submit" button.
+     * Validates the user input and if valid, either creates a new scheduled transaction or updates
+     * an existing one, then navigates back to the appropriate home or view page.
+     *
+     * @param event The action event triggered by the "Submit" button.
+     */
     @FXML
     void onSubmitAction(ActionEvent event) {
+    	// check if inputs are valid
     	if(validate()) {
+    		// create ScheduledTransaction Object
     		String name = scheduleName.getText();
     		Account account = ((AccountDAO) accountDAO).getAccounts().get(accountSelect.getValue());
     		TransactionType type = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes().get(typeSelect.getValue());
@@ -185,6 +245,7 @@ public class ScheduleTransactionController {
     		
     		ScheduledTransaction newScheduledTransaction = new ScheduledTransaction(name, account, type, frequency, due, amount);
     		
+    		// create or update in CSV file
     		if(format.equals(Format.CREATE)) {
     			scheduledTransactionDAO.create(newScheduledTransaction);
         	}
@@ -196,6 +257,11 @@ public class ScheduleTransactionController {
     	}
     }
     
+    /**
+     * Determines which validation method to call based on the current {@link Format}.
+     *
+     * @return true if the input is valid; false otherwise.
+     */
     private boolean validate() {
     	if(format.equals(Format.CREATE)) {
     		return validateCreate();
@@ -206,6 +272,12 @@ public class ScheduleTransactionController {
     	return false;
     }
     
+    /**
+     * Validates the user input fields for creating a new scheduled transaction.
+     * Checks schedule name uniqueness, account selection, transaction type selection, frequency, due date, and amount.
+     *
+     * @return true if all inputs are valid; false otherwise.
+     */
     private boolean validateCreate() {
     	// boolean to verify valid inputs
     	boolean inputValidate = true;
@@ -277,6 +349,13 @@ public class ScheduleTransactionController {
     	return inputValidate;
     }
     
+    /**
+     * Validates the user input fields for editing an existing scheduled transaction.
+     * Ensures the edited schedule name is not taken by another transaction, and checks
+     * account selection, transaction type selection, frequency, due date, and amount.
+     *
+     * @return true if all inputs are valid; false otherwise.
+     */
     private boolean validateEdit() {
     	// boolean to verify valid inputs
     	boolean inputValidate = true;

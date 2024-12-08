@@ -19,10 +19,24 @@ import application.Transaction;
 import application.Account;
 import application.TransactionType;
 
+/**
+ * A Data Access Object (DAO) implementation for managing {@link Transaction} objects.
+ * This DAO uses a CSV file as its data store. The file's path is specified by {@code TRANSACTION_FILE}.
+ * 
+ * <p>In addition to basic create and update operations defined by {@link DAOInt}, this class 
+ * also implements {@link SearchableDAO} to allow searching transactions by their description,
+ * and provides methods to retrieve transactions filtered by account or transaction type.</p>
+ */
 public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transaction> {
 	private static final String TRANSACTION_FILE = "db/transactions.csv"; // Path to transactions.csv
 	private static final List<Transaction> TRANSACTIONS = load();
 
+	/**
+     * Creates a new {@link Transaction} record and appends it to the CSV file.
+     * The newly created transaction is also added to the in-memory list.
+     *
+     * @param obj The {@code Transaction} object to be created.
+     */
 	@Override
 	public void create(Transaction obj) {
 		File file = new File(TRANSACTION_FILE);
@@ -52,6 +66,15 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 
 	}
 
+	/**
+     * Updates an existing {@link Transaction} record with new values.
+     * This method reads all transactions from the CSV file, finds the record 
+     * matching {@code curr}, replaces it with {@code updated}, and then writes all 
+     * records back to the file.
+     *
+     * @param curr    The current {@code Transaction} record as stored.
+     * @param updated The {@code Transaction} object with updated values.
+     */
 	@Override
 	public void update(Transaction curr, Transaction updated) {
 		// TODO Auto-generated method stub
@@ -96,6 +119,12 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 		}
 	}
 	
+	/**
+     * Searches for {@link Transaction} objects whose description contains the given substring.
+     *
+     * @param subStr The substring to search for in the transaction descriptions.
+     * @return A list of {@code Transaction} objects that contain the substring in their description.
+     */
 	@Override
 	public List<Transaction> search(String subStr) {
 		List<Transaction> results = new ArrayList<>();
@@ -109,6 +138,12 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 		return results;
 	}	
 	
+	/**
+     * Loads all {@link Transaction} records from the CSV file into a list.
+     * This static method is called once at class initialization and populates the in-memory list.
+     *
+     * @return A list of {@link Transaction} objects loaded from the CSV file.
+     */
 	private static List<Transaction> load() {
 		List<Transaction> transactions = new ArrayList<>();
 		File file = new File(TRANSACTION_FILE);
@@ -147,7 +182,12 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 		return transactions;
 	}
 
-	// Method to get transactions by Account
+	/**
+     * Retrieves all transactions associated with a given {@link Account}.
+     *
+     * @param account The account whose transactions should be returned.
+     * @return A list of transactions linked to the specified account.
+     */
 	public List<Transaction> getTransactionsByAccount(Account account) {
 		List<Transaction> accountTransactions = new ArrayList<>();
 		for (Transaction transaction : TRANSACTIONS) {
@@ -158,7 +198,12 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 		return accountTransactions;
 	}
 
-	// Method to get transactions by TransactionType
+	/**
+     * Retrieves all transactions of a given {@link TransactionType}.
+     *
+     * @param transactionType The transaction type to filter by.
+     * @return A list of transactions matching the specified transaction type.
+     */
 	public List<Transaction> getTransactionsByType(TransactionType transactionType) {
 		List<Transaction> typeTransactions = new ArrayList<>();
 		for (Transaction transaction : TRANSACTIONS) {
@@ -169,6 +214,12 @@ public class TransactionDAO implements DAOInt<Transaction>, SearchableDAO<Transa
 		return typeTransactions;
 	}
 
+	/**
+     * Retrieves all loaded {@link Transaction} objects.
+     * The returned list is a cached representation of the transactions loaded from the CSV file.
+     *
+     * @return A list of all {@code Transaction} objects.
+     */
 	public List<Transaction> getTransactions() {
 		return TRANSACTIONS;
 	}

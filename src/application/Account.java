@@ -2,11 +2,24 @@ package application;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a financial account with a name, opening date, and balance.
+ * Instances of this class store basic account information and provide
+ * getters and setters for each field. The {@link #toString()} method
+ * returns the account's name as a string representation.
+ */
 public class Account {
 	private String name;
 	private LocalDate openingDate;
 	private double balance;
 	
+	/**
+     * Constructs a new {@code Account} with the specified name, opening date, and balance.
+     *
+     * @param name         The name of the account.
+     * @param openingDate  The date on which the account was opened.
+     * @param balance      The initial balance of the account.
+     */
 	public Account(String name, LocalDate openingDate, double balance) {
 		this.name = name;
 		this.openingDate = openingDate;
@@ -39,7 +52,12 @@ public class Account {
 		this.balance = balance;
 	}
 
-	// Override toString to display only the account name
+	 /**
+     * Returns the string representation of this account.
+     * In this case, the account's name is returned.
+     *
+     * @return A string representing the account name.
+     */
 	@Override
 	public String toString() {
 		return name;

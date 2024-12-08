@@ -11,9 +11,22 @@ import javafx.fxml.FXMLLoader;
 
 import java.util.List;
 
-
+/**
+ * The main entry point for the JavaFX application.
+ * This class initializes the primary stage, loads the Home view, applies stylesheets,
+ * and checks for any scheduled transactions due on the current day. If any are found,
+ * it displays an alert to inform the user.
+ */
 public class Main extends Application {
 	private final ScheduledTransactionDAO scheduledTransactionDAO = new ScheduledTransactionDAO();
+	
+	/**
+     * Starts the JavaFX application.
+     * Loads the Home view, sets up the scene, applies the stylesheet, and checks for due scheduled transactions.
+     *
+     * @param primaryStage The primary stage for this application, onto which
+     *                     the application scene can be set.
+     */
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -37,6 +50,11 @@ public class Main extends Application {
 		}
 	}
 
+	/**
+     * Displays an alert listing all scheduled transactions that are due today.
+     *
+     * @param dueToday A list of {@link ScheduledTransaction} objects that are due today.
+     */
 	private void showAlert(List<ScheduledTransaction> dueToday) {
 		StringBuilder message = new StringBuilder("The following transactions are due today:\n");
 		for (ScheduledTransaction transaction : dueToday) {
@@ -52,6 +70,11 @@ public class Main extends Application {
 		alert.showAndWait();
 	}
 	
+	/**
+     * The main method, which starts the JavaFX application.
+     *
+     * @param args The command line arguments (not used).
+     */
 	public static void main(String[] args) {
 		launch(args);
 	}

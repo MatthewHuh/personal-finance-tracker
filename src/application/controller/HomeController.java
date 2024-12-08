@@ -21,6 +21,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for the Home view. This class provides the main navigation and 
+ * access points to various operations such as creating accounts, defining transaction types,
+ * entering transactions, scheduling transactions, viewing transactions, viewing scheduled transactions,
+ * and viewing reports. It also displays a summary of existing accounts and their balances.
+ */
 public class HomeController {
 
     @FXML
@@ -56,6 +62,10 @@ public class HomeController {
     @FXML
     private Button viewReportsButton;
 
+    /**
+     * Initializes the Home view controller after the root element has been completely processed.
+     * Sets up the columns of the account table, loads account data, and applies sorting to the table.
+     */
     @FXML
     public void initialize() {
         // Set up the columns to match Account class properties
@@ -74,6 +84,12 @@ public class HomeController {
         accountTable.getSortOrder().add(accountDateCol);
     }
     
+    /**
+     * Handles the "Create New Account" button action.
+     * When clicked, this method navigates the user to the account creation view.
+     *
+     * @param event The action event triggered by the "Create New Account" button.
+     */
     @FXML
     void onCreateNewAccount(ActionEvent event) {
         try {
@@ -92,6 +108,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Handles the "Define New Transaction" button action.
+     * When clicked, this method navigates the user to the transaction type definition view.
+     *
+     * @param event The action event triggered by the "Define New Transaction" button.
+     */
     @FXML
     void onDefineNewTransaction(ActionEvent event) {
     	 try {
@@ -110,6 +132,12 @@ public class HomeController {
          }
     }
 
+    /**
+     * Handles the "Enter Transaction" button action.
+     * When clicked, this method navigates the user to the transaction creation view.
+     *
+     * @param event The action event triggered by the "Enter Transaction" button.
+     */
     @FXML
     void onEnterTransaction(ActionEvent event) {
     	try {
@@ -129,6 +157,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Handles the "Schedule Transaction" button action.
+     * When clicked, this method navigates the user to the transaction scheduling view.
+     *
+     * @param event The action event triggered by the "Schedule Transaction" button.
+     */
     @FXML
     void onScheduleTransaction(ActionEvent event) {
     	try {
@@ -148,7 +182,12 @@ public class HomeController {
         }
     }
     
-
+    /**
+     * Handles the "View Transactions" button action.
+     * When clicked, this method navigates the user to the view where all transactions are listed.
+     *
+     * @param event The action event triggered by the "View Transactions" button.
+     */
     @FXML
     void onViewTransaction(ActionEvent event) {
     	try {
@@ -167,6 +206,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Handles the "View Scheduled Transactions" button action.
+     * When clicked, this method navigates the user to the view where scheduled transactions are listed.
+     *
+     * @param event The action event triggered by the "View Scheduled Transactions" button.
+     */
     @FXML
     void onViewScheduledTransaction(ActionEvent event) {
     	try {
@@ -185,6 +230,13 @@ public class HomeController {
         }
     }
 
+    /**
+     * Handles the "View Reports" button action.
+     * When clicked, this method navigates the user to the reports view,
+     * where various financial reports can be generated and displayed.
+     *
+     * @param event The action event triggered by the "View Reports" button.
+     */
     @FXML
     void onViewReports(ActionEvent event) {
     	try {

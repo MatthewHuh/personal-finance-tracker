@@ -17,6 +17,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller class responsible for handling the creation of a new account.
+ * This class manages user interactions, input validations, and the submission
+ * of account data to the underlying data persistence layer.
+ */
 public class CreateAccountController {
 
     @FXML
@@ -42,13 +47,24 @@ public class CreateAccountController {
 
 	private DAOInt<Account> accDao;
 
-    // set default value in date picker to current date
+	/**
+     * Initializes the controller after the root element has been completely processed.
+     * Sets the default value of the opening date picker to the current date, and
+     * initializes the {@code AccountDAO} instance for account operations.
+     */
     @FXML
     public void initialize() {
     	openingDatePicker.setValue(LocalDate.now());
     	accDao = new AccountDAO(); // initialize accountDAO so that the same one is used
     }   
     
+    
+    /**
+     * Handles the event triggered by the "Cancel" button.
+     * Navigates back to the home view (Home.fxml).
+     *
+     * @param event The action event triggered by the "Cancel" button.
+     */
     @FXML
     void onCancelAction(ActionEvent event) {
     	try {
@@ -68,11 +84,13 @@ public class CreateAccountController {
 		}
     }
 
-    @FXML
-    void onDateAction(ActionEvent event) {
-
-    }
-
+    /**
+     * Handles the event triggered by the "Submit" button.
+     * Validates the user input. If valid, creates a new {@link Account} instance and
+     * persists it. Upon successful creation, navigates back to the home view.
+     *
+     * @param event The action event triggered by the "Submit" button.
+     */
     @FXML
     void onSubmitAction(ActionEvent event) {
     	// verify valid inputs
@@ -100,6 +118,13 @@ public class CreateAccountController {
     	}
     }
     
+    /**
+     * Validates the user input fields for creating a new account.
+     * Ensures that the account name is not empty or taken, a date is selected,
+     * and the opening balance is valid.
+     *
+     * @return {@code true} if all inputs are valid; {@code false} otherwise.
+     */
     private boolean inputValidate() {
     	// boolean to verify valid inputs
     	boolean inputValidate = true;

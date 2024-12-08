@@ -24,6 +24,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for viewing and interacting with scheduled transactions.
+ * This class displays a list of scheduled transactions in a table, allows searching
+ * by schedule name, and enables editing a scheduled transaction by clicking on a row.
+ * Clicking the "Back" button returns to the Home view.
+ */
 public class ViewScheduledTransactionsController {
 
     @FXML
@@ -61,6 +67,11 @@ public class ViewScheduledTransactionsController {
 
     private final DAOInt<ScheduledTransaction> scheduledTransactionDAO = new ScheduledTransactionDAO();
     
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Sets up table columns, loads scheduled transactions, sorts them, and enables row clicks
+     * for editing scheduled transactions.
+     */
     @FXML
     public void initialize() {
         // Set up the columns to match Account class properties
@@ -112,6 +123,13 @@ public class ViewScheduledTransactionsController {
             return row;
         });
     }
+    
+    /**
+     * Handles the action triggered by the "Back" button.
+     * Navigates back to the Home view.
+     *
+     * @param event The action event triggered by the "Back" button.
+     */
     @FXML
     void onBack(ActionEvent event) {
     	try {
@@ -131,6 +149,13 @@ public class ViewScheduledTransactionsController {
 		}
     }
     
+    /**
+     * Handles the action triggered by the "Search" button.
+     * Searches the scheduled transactions by the entered text (schedule name),
+     * and updates the table to show only the matching results.
+     *
+     * @param event The action event triggered by the "Search" button.
+     */
     @FXML
     void onSearch(ActionEvent event) {
         String searchInput = searchText.getText().trim();// get search input

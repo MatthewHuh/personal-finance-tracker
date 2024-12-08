@@ -26,7 +26,15 @@ import application.dao.AccountDAO;
 import application.dao.DAOInt;
 import application.dao.TransactionTypeDAO;
 
-
+/**
+ * Controller class for creating or editing transactions. This class supports two modes:
+ * <ul>
+ *   <li>{@link Format#CREATE}: creating a new transaction</li>
+ *   <li>{@link Format#EDIT}: editing an existing transaction</li>
+ * </ul>
+ * Users can select an account, a transaction type, specify the date and amounts (payment or deposit),
+ * and provide a description. The transactions are persisted via a DAO.
+ */
 public class TransactionController {
 
     @FXML
@@ -77,17 +85,33 @@ public class TransactionController {
     private final DAOInt<Account> accountDAO = new AccountDAO();
     private final DAOInt<TransactionType> transactionTypeDAO = new TransactionTypeDAO();
 
-
+    /**
+     * Initializes the controller for the CREATE mode. Clears any existing transaction reference
+     * and sets the {@link Format} to CREATE.
+     *
+     * @param form The format to set, typically {@link Format#CREATE}.
+     */
     public static void initialize(Format form) {
     	transaction = null;
     	format = form;
     }
     
+    /**
+     * Initializes the controller for the EDIT mode with an existing transaction.
+     *
+     * @param theTransaction The existing transaction to edit.
+     * @param theFormat      The format to set, typically {@link Format#EDIT}.
+     */
     public static void initialize(Transaction theTransaction, Format theFormat) {
     	transaction = theTransaction;
     	format = theFormat;
     }
     
+    /**
+     * Initializes the UI components after the root element has been processed.
+     * Based on the current {@link Format}, it sets up the UI for either creating 
+     * or editing a transaction.
+     */
     public void initialize() {
     	if(format.equals(Format.CREATE)) {
         	initializeCreate();
@@ -95,9 +119,17 @@ public class TransactionController {
     	else if(format.equals(Format.EDIT)) {
     		initializeEdit();
     	}
-    	
     }
-    
+   
+    /**
+     * Initializes the UI elements for the CREATE mode:
+     * <ul>
+     *   <li>Populates the account choice box with available accounts</li>
+     *   <li>Populates the transaction type choice box with available transaction types</li>
+     *   <li>Sets the default date picker value to the current date</li>
+     *   <li>Updates the page title</li>
+     * </ul>
+     */
     private void initializeCreate() {
     	// Populate account and transaction type ChoiceBoxes
     	Map<String, Account> accounts;
@@ -116,6 +148,16 @@ public class TransactionController {
         pageTitle.setText("Enter Transaction");
     }
     
+    /**
+     * Initializes the UI elements for the EDIT mode:
+     * <ul>
+     *   <li>Populates the account and transaction type choice boxes with available values,
+     *       and selects the existing transaction's values</li>
+     *   <li>Sets the date picker to the existing transaction's date</li>
+     *   <li>Pre-fills the description and amounts</li>
+     *   <li>Updates the page title</li>
+     * </ul>
+     */
     private void initializeEdit() {
     	Map<String, Account> accounts;
     	accounts = ((AccountDAO) accountDAO).getAccounts();
@@ -137,7 +179,16 @@ public class TransactionController {
         pageTitle.setText("Edit Transaction");
     } 
 
-
+    /**
+     * Handles the action triggered by the "Cancel" button.
+     * Depending on the current {@link Format}, this method navigates:
+     * <ul>
+     *   <li>CREATE mode: back to the Home view</li>
+     *   <li>EDIT mode: back to the ViewTransactions view</li>
+     * </ul>
+     *
+     * @param event The action event triggered by the "Cancel" button.
+     */
     @FXML
     void onCancelAction(ActionEvent event) {
     	if(format.equals(Format.CREATE)) {
@@ -176,7 +227,19 @@ public class TransactionController {
     	}
     	
     }
-
+    
+    /**
+     * Handles the action triggered by the "Submit" button.
+     * Validates the user input fields. If valid:
+     * <ul>
+     *   <li>Constructs a new {@link Transaction} object from the user input</li>
+     *   <li>In CREATE mode, creates a new transaction in the data store</li>
+     *   <li>In EDIT mode, updates the existing transaction in the data store</li>
+     *   <li>Navigates back to the Home or ViewTransactions view depending on the mode</li>
+     * </ul>
+     *
+     * @param event The action event triggered by the "Submit" button.
+     */
     @FXML
     void onSubmitAction(ActionEvent event) {
     	if (validateFields()) {
@@ -247,6 +310,14 @@ public class TransactionController {
         }	
     }
     
+    /**
+     * Validates the user inputs from the UI fields.
+     * Ensures that an account and transaction type are selected, a date is chosen,
+     * a description is provided, and at least one amount (payment or deposit) is entered
+     * with a valid decimal number format.
+     *
+     * @return true if all fields are valid; false otherwise.
+     */
     private boolean validateFields() {
         boolean isValid = true;
 

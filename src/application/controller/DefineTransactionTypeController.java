@@ -14,6 +14,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller class that handles the definition of new transaction types.
+ * Allows the user to specify a unique transaction type and persists
+ * it in the underlying data layer.
+ */
 public class DefineTransactionTypeController {
 
     @FXML
@@ -27,11 +32,22 @@ public class DefineTransactionTypeController {
     
     private DAOInt<TransactionType> dao;
     
+    
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * This method sets up the data access object (DAO) needed for transaction type persistence.
+     */
     public void initialize() {
     	// initialize dao
 		dao = new TransactionTypeDAO();
     }   
 
+    /**
+     * Handles the action triggered by the "Cancel" button.
+     * When invoked, this method navigates back to the Home view.
+     *
+     * @param event The action event triggered by the cancel button.
+     */
     @FXML
     void onCancelAction(ActionEvent event) {
     	try {
@@ -51,13 +67,23 @@ public class DefineTransactionTypeController {
 		}
     }
 
+    /**
+     * Handles the action triggered by the "Submit" button.
+     * Validates user input for the transaction type field. If valid, a new 
+     * {@link TransactionType} object is created and persisted. Upon successful 
+     * creation, navigates back to the Home view.
+     *
+     * @param event The action event triggered by the submit button.
+     */
     @FXML
     void onSubmitAction(ActionEvent event) {
+    	// check if input is valid
     	boolean inputValidate = true;
-    	if(transactionTypeText.getText().equals("")) {
+    	// check if transaction type was entered
+    	if(transactionTypeText.getText().equals("")) { 
     		transactionTypeErrorMsg.setText("Please enter the transaction type");
     		inputValidate = false;
-    	}
+    	} // check if transaction type is unique
     	else if(((TransactionTypeDAO) dao).getTransactionTypes().get(transactionTypeText.getText()) != null) {
     		transactionTypeErrorMsg.setText("Transaction type already exists. Please enter a unique type");
     		inputValidate = false;

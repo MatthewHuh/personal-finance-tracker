@@ -23,6 +23,18 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for viewing reports of transactions.
+ * This class allows users to filter transactions by account or by transaction type.
+ * It displays a table of transactions, sorted by date in descending order.
+ * Users can click on a transaction row to view its detailed information on a separate page.
+ * 
+ * The dynamic column (first column) changes depending on the selected filter:
+ * <ul>
+ *   <li>If an account is selected, the dynamic column shows the transaction type.</li>
+ *   <li>If a transaction type is selected, the dynamic column shows the account name.</li>
+ * </ul>
+ */
 public class ViewReportsController {
 
     @FXML
@@ -64,6 +76,12 @@ public class ViewReportsController {
     private Account selectedAccount;
     private TransactionType selectedTransactionType;
 
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Sets up choice boxes for accounts and transaction types, configures table columns,
+     * and adds listeners to update the transaction table whenever a selection changes.
+     * Also sets up row click behavior to open the transaction detail view.
+     */
     @FXML
     public void initialize() {
         // Add options into Account ChoiceBox
@@ -165,7 +183,14 @@ public class ViewReportsController {
             return row;
         });
     }
-    // Open the Transaction Detail page which is read only
+    
+    /**
+     * Opens the transaction detail page for the selected transaction.
+     * Passes along the currently selected account and transaction type to the detail controller
+     * so that the user can navigate back to the same filtered report view.
+     *
+     * @param transaction The transaction to display in the detail view.
+     */
     private void openTransactionDetailPage(Transaction transaction) {
         try {
             Account selectedAccount = accountSelect.getSelectionModel().getSelectedItem();
@@ -186,6 +211,13 @@ public class ViewReportsController {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Handles the action triggered by the "Back" button.
+     * Navigates back to the Home view.
+     *
+     * @param event The action event triggered by the "Back" button.
+     */
     @FXML
     void onBack(ActionEvent event) {
     	try {
@@ -204,7 +236,11 @@ public class ViewReportsController {
 			e.printStackTrace();
 		}
     }
-    // Method to load transactions based on previous choice box selection
+    
+    /**
+     * Loads transactions based on the previously selected account or transaction type.
+     * Refreshes the table display.
+     */
     private void loadTransactions() {
         ObservableList<Transaction> transactions = FXCollections.observableArrayList();
 
@@ -220,13 +256,25 @@ public class ViewReportsController {
 
         transactionTable.refresh();
     }
-    // Method to update selected account and transaction type from TransactionDetailController
+    
+    /**
+     * Sets the currently selected account, updates the account choice box,
+     * and reloads the transactions filtered by this account.
+     * 
+     * @param account The account to set as currently selected.
+     */
     public void setSelectedAccount(Account account) {
         this.selectedAccount = account;
         accountSelect.getSelectionModel().select(account);  // Update the choice box selection
         loadTransactions();  // Load the transactions based on the selected account
     }
 
+    /**
+     * Sets the currently selected transaction type, updates the transaction type choice box,
+     * and reloads the transactions filtered by this transaction type.
+     * 
+     * @param transactionType The transaction type to set as currently selected.
+     */
     public void setSelectedTransactionType(TransactionType transactionType) {
         this.selectedTransactionType = transactionType;
         typeSelect.getSelectionModel().select(transactionType);  // Update the choice box selection

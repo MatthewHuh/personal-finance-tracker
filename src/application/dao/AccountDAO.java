@@ -13,11 +13,21 @@ import com.opencsv.CSVWriter;
 
 import application.Account;
 
+/**
+ * A Data Access Object (DAO) implementation for managing {@link Account} objects.
+ * This DAO uses a CSV file as its data store. The file's path is specified by {@code ACCOUNTS_FILE}.
+ */
 public class AccountDAO implements DAOInt<Account>{
 	
 	private static final String ACCOUNTS_FILE = "db/accounts.csv"; // path to accounts.csv
 	private static final Map<String, Account> ACCOUNTS = load();
 	
+	/**
+     * Creates a new {@link Account} record and appends it to the CSV file.
+     * The newly created account is also added to the in-memory cache.
+     *
+     * @param obj The {@code Account} object to be created.
+     */
 	@Override
 	public void create(Account obj) {
 		// specify path of the csv file
@@ -45,13 +55,30 @@ public class AccountDAO implements DAOInt<Account>{
 	    }
 	}
 
+	/**
+     * Updates an existing {@link Account}. Currently, this method is not implemented.
+     * To implement updates, you would need to:
+     * <ul>
+     *   <li>Load all accounts from the CSV file</li>
+     *   <li>Find and replace the current account record with the updated one</li>
+     *   <li>Overwrite the CSV file with the new records</li>
+     * </ul>
+     *
+     * @param curr    The current {@code Account} record as stored.
+     * @param updated The {@code Account} object with updated values.
+     */
 	@Override
 	public void update(Account curr, Account updated) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	//parses data from accounts.csv into an array of accounts
+	/**
+     * Loads all {@link Account} records from the CSV file into a map, keyed by account name.
+     * This static method is called once at class initialization and populates the in-memory cache.
+     *
+     * @return A map of account names to their corresponding {@link Account} objects.
+     */
 	private static Map<String, Account> load() {
 		HashMap<String, Account> accounts = new HashMap<>();
         File file = new File(ACCOUNTS_FILE);
@@ -84,6 +111,12 @@ public class AccountDAO implements DAOInt<Account>{
         return accounts;
 	}
 	
+	/**
+     * Retrieves all loaded {@link Account} objects.
+     * The returned map is a cached representation of the accounts loaded from the CSV file.
+     *
+     * @return A map of account names to their corresponding {@link Account} objects.
+     */
 	public Map<String, Account> getAccounts() {
 		return ACCOUNTS;
 	}
