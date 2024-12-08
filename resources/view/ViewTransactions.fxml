@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ViewTransactionsController">
+<BorderPane fx:id="createAccountPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ViewTransactionsController">
    <bottom>
       <HBox alignment="CENTER" prefWidth="416.0" BorderPane.alignment="CENTER">
          <children>
