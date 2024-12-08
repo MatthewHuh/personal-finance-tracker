@@ -7,6 +7,7 @@ import application.Account;
 import application.Transaction;
 import application.TransactionType;
 import application.dao.AccountDAO;
+import application.dao.DAOInt;
 import application.dao.TransactionTypeDAO;
 import application.dao.TransactionDAO;
 import javafx.beans.property.SimpleObjectProperty;
@@ -57,20 +58,20 @@ public class ViewReportsController {
     @FXML
     private ChoiceBox<Account> accountSelect;
 
-    private AccountDAO accountDAO = new AccountDAO();
-    private TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO();
-    private TransactionDAO transactionDAO = new TransactionDAO();
+    private DAOInt<Account> accountDAO = new AccountDAO();
+    private DAOInt<TransactionType> transactionTypeDAO = new TransactionTypeDAO();
+    private DAOInt<Transaction> transactionDAO = new TransactionDAO();
     private Account selectedAccount;
     private TransactionType selectedTransactionType;
 
     @FXML
     public void initialize() {
         // Add options into Account ChoiceBox
-        ObservableList<Account> accounts = FXCollections.observableArrayList(accountDAO.getAccounts().values());
+        ObservableList<Account> accounts = FXCollections.observableArrayList(((AccountDAO) accountDAO).getAccounts().values());
         accountSelect.setItems(accounts);
 
         // Add options into TransactionType ChoiceBox
-        ObservableList<TransactionType> transactionTypes = FXCollections.observableArrayList(transactionTypeDAO.getTransactionTypes().values());
+        ObservableList<TransactionType> transactionTypes = FXCollections.observableArrayList(((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes().values());
         typeSelect.setItems(transactionTypes);
 
         // Set up the columns to display data
@@ -114,7 +115,7 @@ public class ViewReportsController {
                 typeSelect.getSelectionModel().clearSelection();
 
                 // Get the transactions based on selected account
-                ObservableList<Transaction> filteredTransactions = FXCollections.observableArrayList(transactionDAO.getTransactionsByAccount(newValue));
+                ObservableList<Transaction> filteredTransactions = FXCollections.observableArrayList(((TransactionDAO) transactionDAO).getTransactionsByAccount(newValue));
 
                 // Sort the transactions by transaction date in descending order
                 filteredTransactions.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));
@@ -139,7 +140,7 @@ public class ViewReportsController {
                 accountSelect.getSelectionModel().clearSelection();
 
                 // Get the transactions based on selected transaction type
-                ObservableList<Transaction> filteredTransactions = FXCollections.observableArrayList(transactionDAO.getTransactionsByType(newValue));
+                ObservableList<Transaction> filteredTransactions = FXCollections.observableArrayList(((TransactionDAO) transactionDAO).getTransactionsByType(newValue));
 
                 // Sort the transactions by transaction date in descending order
                 filteredTransactions.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));
@@ -208,9 +209,9 @@ public class ViewReportsController {
         ObservableList<Transaction> transactions = FXCollections.observableArrayList();
 
         if (selectedAccount != null) {
-            transactions.addAll(transactionDAO.getTransactionsByAccount(selectedAccount));
+            transactions.addAll(((TransactionDAO) transactionDAO).getTransactionsByAccount(selectedAccount));
         } else if (selectedTransactionType != null) {
-            transactions.addAll(transactionDAO.getTransactionsByType(selectedTransactionType));
+            transactions.addAll(((TransactionDAO) transactionDAO).getTransactionsByType(selectedTransactionType));
         }
 
         transactions.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate()));

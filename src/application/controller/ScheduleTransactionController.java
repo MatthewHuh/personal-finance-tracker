@@ -8,6 +8,7 @@ import application.Format;
 import application.ScheduledTransaction;
 import application.TransactionType;
 import application.dao.AccountDAO;
+import application.dao.DAOInt;
 import application.dao.ScheduledTransactionDAO;
 import application.dao.TransactionTypeDAO;
 import javafx.event.ActionEvent;
@@ -67,11 +68,9 @@ public class ScheduleTransactionController {
 
     private static ScheduledTransaction scheduledTransaction;
     private static Format format;
-    private final ScheduledTransactionDAO scheduledTransactionDAO = new ScheduledTransactionDAO();
-    private final AccountDAO accountDAO = new AccountDAO();
-    private final TransactionTypeDAO transactionTypeDAO = new TransactionTypeDAO();
-    private Map<String, Account> accounts;
-    private Map<String, TransactionType> transactionTypes;
+    private final DAOInt<ScheduledTransaction> scheduledTransactionDAO = new ScheduledTransactionDAO();
+    private final DAOInt<Account> accountDAO = new AccountDAO();
+    private final DAOInt<TransactionType> transactionTypeDAO = new TransactionTypeDAO();
     
     public static void initialize(Format theFormat) {
     	scheduledTransaction = null;
@@ -94,11 +93,13 @@ public class ScheduleTransactionController {
     
     private void initializeCreate() {
     	// Populate account and transaction type ChoiceBoxes
-		accounts = accountDAO.getAccounts();
+    	Map<String, Account> accounts;
+		accounts = ((AccountDAO) accountDAO).getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().selectFirst(); // Set default to first item
 
-        transactionTypes = transactionTypeDAO.getTransactionTypes();
+        Map<String, TransactionType> transactionTypes;
+        transactionTypes = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes();
         typeSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
         typeSelect.getSelectionModel().selectFirst(); // Set default to first item
         
@@ -109,11 +110,13 @@ public class ScheduleTransactionController {
     }
     
     private void initializeEdit() {
-    	accounts = accountDAO.getAccounts();
+    	Map<String, Account> accounts;
+    	accounts = ((AccountDAO) accountDAO).getAccounts();
         accountSelect.getItems().addAll(accounts.values().stream().map(Account::getName).toArray(String[]::new));
         accountSelect.getSelectionModel().select(scheduledTransaction.getAccount().getName()); // Set default to first item
 
-        transactionTypes = transactionTypeDAO.getTransactionTypes();
+        Map<String, TransactionType> transactionTypes;
+        transactionTypes = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes();
         typeSelect.getItems().addAll(transactionTypes.values().stream().map(TransactionType::getTransactionType).toArray(String[]::new));
         typeSelect.getSelectionModel().select(scheduledTransaction.getType().getTransactionType()); // Set default to first item
         
@@ -174,8 +177,8 @@ public class ScheduleTransactionController {
     void onSubmitAction(ActionEvent event) {
     	if(validate()) {
     		String name = scheduleName.getText();
-    		Account account = accountDAO.getAccounts().get(accountSelect.getValue());
-    		TransactionType type = transactionTypeDAO.getTransactionTypes().get(typeSelect.getValue());
+    		Account account = ((AccountDAO) accountDAO).getAccounts().get(accountSelect.getValue());
+    		TransactionType type = ((TransactionTypeDAO) transactionTypeDAO).getTransactionTypes().get(typeSelect.getValue());
     		String frequency = frequencySelect.getValue();
     		int due = Integer.parseInt(dueDate.getText());
     		double amount = Double.parseDouble(paymentAmount.getText());
@@ -212,7 +215,7 @@ public class ScheduleTransactionController {
     		nameErrorMsg.setText("Please enter the schedule name");
     		inputValidate = false;
     	} 
-    	else if(scheduledTransactionDAO.getScheduledTransactions().get(scheduleName.getText()) != null) {
+    	else if(((ScheduledTransactionDAO) scheduledTransactionDAO).getScheduledTransactions().get(scheduleName.getText()) != null) {
     		nameErrorMsg.setText("Schedule name taken. Please enter a unique name");
     		inputValidate = false;
     	}
@@ -284,7 +287,7 @@ public class ScheduleTransactionController {
     		inputValidate = false;
     	} 
     	else if(!scheduledTransaction.getScheduleName().equals(scheduleName.getText()) && 
-    			scheduledTransactionDAO.getScheduledTransactions().get(scheduleName.getText()) != null) {
+    			((ScheduledTransactionDAO) scheduledTransactionDAO).getScheduledTransactions().get(scheduleName.getText()) != null) {
     		nameErrorMsg.setText("Schedule name taken. Please enter a unique name");
     		inputValidate = false;
     	}

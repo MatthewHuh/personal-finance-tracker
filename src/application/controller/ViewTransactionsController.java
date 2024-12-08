@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import application.Format;
 import application.Transaction;
-
+import application.dao.DAOInt;
 import application.dao.TransactionDAO;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -61,7 +61,7 @@ public class ViewTransactionsController {
     private TextField searchText;
 
 
-    private final TransactionDAO transactionDAO = new TransactionDAO();
+    private final DAOInt<Transaction> transactionDAO = new TransactionDAO();
     
     @FXML
     public void initialize() {
@@ -94,7 +94,7 @@ public class ViewTransactionsController {
 		});
 		
         // Load transactions from DAO and populate TableView
-        List<Transaction> transactions = transactionDAO.getTransactions();
+        List<Transaction> transactions = ((TransactionDAO) transactionDAO).getTransactions();
         if (transactionTable != null) {
         	ObservableList<Transaction> observableTransactions = FXCollections.observableArrayList(transactions);
             transactionTable.setItems(observableTransactions);
@@ -152,7 +152,7 @@ public class ViewTransactionsController {
     @FXML
     void onSearch(ActionEvent event) {
         String searchInput = searchText.getText().trim(); // get search input
-        List<Transaction> searchResults = transactionDAO.search(searchInput); // search transactions by description
+        List<Transaction> searchResults = ((TransactionDAO) transactionDAO).search(searchInput); // search transactions by description
         ObservableList<Transaction> observableResults = FXCollections.observableArrayList(searchResults); // convert results to observable list
         transactionTable.setItems(observableResults); // update table
         transactionTable.getSortOrder().clear();// clear sort order to view results correctly

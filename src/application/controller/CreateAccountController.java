@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import application.Account;
 import application.dao.AccountDAO;
+import application.dao.DAOInt;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +40,7 @@ public class CreateAccountController {
     @FXML
     private DatePicker openingDatePicker;
 
-	private AccountDAO accDao;
+	private DAOInt<Account> accDao;
 
     // set default value in date picker to current date
     @FXML
@@ -108,7 +109,7 @@ public class CreateAccountController {
     		accountNameErrorMsg.setText("Please enter the name");
     		inputValidate = false;
     	} // check if name is unique
-    	else if(accDao.getAccounts().get(accountNameText.getText()) != null) {
+    	else if(((AccountDAO) accDao).getAccounts().get(accountNameText.getText()) != null) {
     		accountNameErrorMsg.setText("Account name taken. Please enter a unique name");
     		inputValidate = false;
     	}

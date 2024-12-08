@@ -7,6 +7,7 @@ import java.util.Map;
 import application.Account;
 import application.Format;
 import application.dao.AccountDAO;
+import application.dao.DAOInt;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,8 +64,8 @@ public class HomeController {
         accountBalanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
         // Load accounts from the CSV file
-        AccountDAO acc = new AccountDAO();
-        Map<String, Account> accounts = acc.getAccounts();
+        DAOInt<Account> acc = new AccountDAO();
+        Map<String, Account> accounts = ((AccountDAO) acc).getAccounts();
         if (accounts != null) {
             ObservableList<Account> accountList = FXCollections.observableArrayList(accounts.values());
             accountTable.setItems(accountList);

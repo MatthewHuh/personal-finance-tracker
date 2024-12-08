@@ -1,6 +1,6 @@
 name,account,type,frequency,dueDate,amount
-Weekly Groceries,Chase VISA Credit,food,Monthly,1,15.25
-Rent,US Bank Savings,rent,Monthly,14,100.0
+weekly groceries,Chase VISA Credit,food,Monthly,1,32.92
+rent,US Bank Savings,rent,Monthly,14,100.0
 mortgage,Chase VISA Credit,loan payment,Monthly,6,4000.0
 credit card,Bank of America Checking,loan payment,Monthly,1,4000.0
 savings fee,Bank of America Checking,paycheck,Monthly,7,30.0

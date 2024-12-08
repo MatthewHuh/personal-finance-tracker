@@ -2,6 +2,7 @@ package application.controller;
 
 import java.io.IOException;
 import application.TransactionType;
+import application.dao.DAOInt;
 import application.dao.TransactionTypeDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,7 +25,7 @@ public class DefineTransactionTypeController {
     @FXML
     private TextField transactionTypeText;
     
-    private TransactionTypeDAO dao;
+    private DAOInt<TransactionType> dao;
     
     public void initialize() {
     	// initialize dao
@@ -57,7 +58,7 @@ public class DefineTransactionTypeController {
     		transactionTypeErrorMsg.setText("Please enter the transaction type");
     		inputValidate = false;
     	}
-    	else if(dao.getTransactionTypes().get(transactionTypeText.getText()) != null) {
+    	else if(((TransactionTypeDAO) dao).getTransactionTypes().get(transactionTypeText.getText()) != null) {
     		transactionTypeErrorMsg.setText("Transaction type already exists. Please enter a unique type");
     		inputValidate = false;
     	}
